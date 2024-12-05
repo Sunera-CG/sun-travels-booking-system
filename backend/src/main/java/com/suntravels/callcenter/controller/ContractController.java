@@ -1,6 +1,8 @@
 package com.suntravels.callcenter.controller;
 
+import com.suntravels.callcenter.dto.AvailableContract;
 import com.suntravels.callcenter.dto.ContractDTO;
+import com.suntravels.callcenter.dto.SearchDTO;
 import com.suntravels.callcenter.model.Contract;
 import com.suntravels.callcenter.service.ContractService;
 import jakarta.validation.Valid;
@@ -33,7 +35,7 @@ public class ContractController {
      * @return A ResponseEntity containing the created Contract object with HTTP status CREATED (201).
      */
     @PostMapping
-    public ResponseEntity<Contract> addContract(@Valid @RequestBody ContractDTO contractDTO){
+    public ResponseEntity<Contract> addContract(@RequestBody @Valid ContractDTO contractDTO){
         Contract contract = contractService.addContract(contractDTO);
         return new ResponseEntity<>(contract, HttpStatus.CREATED);
     }
@@ -48,5 +50,20 @@ public class ContractController {
         List<Contract> contracts = contractService.getAllContracts();
         return new ResponseEntity<>(contracts, HttpStatus.OK);
     }
+
+    /**
+     * Searches for contracts based on the search criteria provided in SearchDTO.
+     *
+     * @param searchDTO The search data transfer object containing search parameters.
+     * @return A ResponseEntity containing the list of available contracts and HTTP status FOUND (302).
+     */
+    @PostMapping("/available")
+    public ResponseEntity<List<AvailableContract>> searchContract(@RequestBody @Valid SearchDTO searchDTO){
+        List<AvailableContract> availableContracts = contractService.searchContract(searchDTO);
+        return new ResponseEntity<>(availableContracts, HttpStatus.FOUND);
+
+    }
+
+
 
 }
