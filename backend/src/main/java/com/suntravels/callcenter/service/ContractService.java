@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
-
+import java.util.Objects;
 
 
 @Service
@@ -73,50 +73,50 @@ public class ContractService {
      * @param searchDTO The search data transfer object containing search parameters.
      * @return A list of available contracts.
      */
-    public List<AvailableContract> searchContract(SearchDTO searchDTO) {
-        // Calculate checkout date
-        LocalDate checkoutDate = searchDTO.getCheckInDate().plusDays(searchDTO.getNoOfNights());
-        DateValidator.validateDates(searchDTO.getCheckInDate(), checkoutDate);
-
-        // Fetch available contracts based on basic criteria
-        List<Contract> tempAvailableContracts = contractRepository.findAvailablContract(
-                searchDTO.getCheckInDate(),
-                checkoutDate,
-                searchDTO.getRoomRequirements().getFirst().getNumberOfRooms(),
-                searchDTO.getRoomRequirements().getFirst().getMaxAdults()
-        );
-
-        // If no contracts are found, return a list with one "Unavailable" contract
-        if (tempAvailableContracts.isEmpty()) {
-            return List.of(AvailableContract.builder().status("Unavailable").build());
-        }
-
-        // Filter and map contracts to AvailableContract DTOs
-        List<AvailableContract> availableContracts = tempAvailableContracts.stream()
-                .flatMap(contract -> searchDTO.getRoomRequirements().stream().map(roomRequirementDTO -> {
-                    boolean matches = contract.getRoomDetails().stream().anyMatch(roomDetail ->
-                            roomDetail.getNumberOfRooms() >= roomRequirementDTO.getNumberOfRooms() &&
-                                    roomDetail.getMaxAdults() >= roomRequirementDTO.getMaxAdults()
-                    );
-                    if (matches) {
-                        return AvailableContract.builder()
-                                .hotelName(contract.getHotelName())
-                                .status("Available")
-                                .build();
-                    } else {
-                        return null;
-                    }
-                }))
-                .filter(availableContract -> availableContract != null)
-                .toList();
-
-        // If no contracts match, return "Unavailable"
-        if (availableContracts.isEmpty()) {
-            return List.of(AvailableContract.builder().status("Unavailable").build());
-        }
-
-        return availableContracts;
-    }
+//    public List<AvailableContract> searchContract(SearchDTO searchDTO) {
+//        // Calculate checkout date
+//        LocalDate checkoutDate = searchDTO.getCheckInDate().plusDays(searchDTO.getNoOfNights());
+//        DateValidator.validateDates(searchDTO.getCheckInDate(), checkoutDate);
+//
+//        // Fetch available contracts based on basic criteria
+//        List<Contract> tempAvailableContracts = contractRepository.findAvailablContract(
+//                searchDTO.getCheckInDate(),
+//                checkoutDate,
+//                searchDTO.getRoomRequirements().getFirst().getNumberOfRooms(),
+//                searchDTO.getRoomRequirements().getFirst().getMaxAdults()
+//        );
+//
+//        // If no contracts are found, return a list with one "Unavailable" contract
+//        if (tempAvailableContracts.isEmpty()) {
+//            return List.of(AvailableContract.builder().status("Unavailable").build());
+//        }
+//
+//        // Filter and map contracts to AvailableContract DTOs
+//        List<AvailableContract> availableContracts = tempAvailableContracts.stream()
+//                .flatMap(contract -> searchDTO.getRoomRequirements().stream().map(roomRequirementDTO -> {
+//                    boolean matches = contract.getRoomDetails().stream().anyMatch(roomDetail ->
+//                            roomDetail.getNumberOfRooms() >= roomRequirementDTO.getNumberOfRooms() &&
+//                                    roomDetail.getMaxAdults() >= roomRequirementDTO.getMaxAdults()
+//                    );
+//                    if (matches) {
+//                        return AvailableContract.builder()
+//                                .hotelName(contract.getHotelName())
+//                                .status("Available")
+//                                .build();
+//                    } else {
+//                        return null;
+//                    }
+//                }))
+//                .filter(Objects::nonNull)
+//                .toList();
+//
+//        // If no contracts match, return "Unavailable"
+//        if (availableContracts.isEmpty()) {
+//            return List.of(AvailableContract.builder().status("Unavailable").build());
+//        }
+//
+//        return availableContracts;
+//    }
 
 
 }

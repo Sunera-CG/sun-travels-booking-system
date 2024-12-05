@@ -16,17 +16,17 @@ import java.util.List;
  */
 @Repository
 public interface ContractRepository extends JpaRepository<Contract,Integer> {
-    @Query("SELECT new com.suntravels.callcenter.dto.AvaibleContract(r.roomDetailId, r.maxAdults, r.numberOfRooms, r.pricePerPerson, r.roomType) " +
-            "FROM Contract c " +
-            "JOIN c.roomDetails r " +
-            "WHERE c.startDate <= :checkoutDate " +
-            "AND c.endDate >= :checkinDate " +
-            "AND r.numberOfRooms >= :requiredRooms " +
-            "AND r.maxAdults >= :requiredAdults")
-    List<Contract> findAvailablContract(
-            @Param("checkinDate") LocalDate checkinDate,
-            @Param("checkoutDate") LocalDate checkoutDate,
-            @Param("requiredRooms") int requiredRooms,
-            @Param("requiredAdults") int requiredAdults);
+//    @Query("SELECT new com.suntravels.callcenter.dto.AvaibleContract(r.roomDetailId, r.maxAdults, r.numberOfRooms, r.pricePerPerson, r.roomType) " +
+//            "FROM Contract c " +
+//            "JOIN c.roomDetails r " +
+//            "WHERE c.startDate <= :checkoutDate " +
+//            "AND c.endDate >= :checkinDate " +
+//            "AND r.numberOfRooms >= :requiredRooms " +
+//            "AND r.maxAdults >= :requiredAdults")
+//    List<Contract> findAvailablContract(
+//            @Param("checkinDate") LocalDate checkinDate,
+//            @Param("checkoutDate") LocalDate checkoutDate,
+//            @Param("requiredRooms") int requiredRooms,
+//            @Param("requiredAdults") int requiredAdults);
 
 }

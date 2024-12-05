@@ -57,12 +57,12 @@ public class ContractController {
      * @param searchDTO The search data transfer object containing search parameters.
      * @return A ResponseEntity containing the list of available contracts and HTTP status FOUND (302).
      */
-    @PostMapping("/available")
-    public ResponseEntity<List<AvailableContract>> searchContract(@RequestBody @Valid SearchDTO searchDTO){
-        List<AvailableContract> availableContracts = contractService.searchContract(searchDTO);
-        return new ResponseEntity<>(availableContracts, HttpStatus.FOUND);
-
-    }
+//    @PostMapping("/available")
+//    public ResponseEntity<List<AvailableContract>> searchContract(@RequestBody @Valid SearchDTO searchDTO){
+//        List<AvailableContract> availableContracts = contractService.searchContract(searchDTO);
+//        return new ResponseEntity<>(availableContracts, HttpStatus.FOUND);
+//
+//    }
 
 
 

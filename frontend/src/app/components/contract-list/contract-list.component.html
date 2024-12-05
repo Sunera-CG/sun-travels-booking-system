@@ -1,0 +1,26 @@
+<div class="contract-list">
+  <h2>Contracts</h2>
+  <div *ngFor="let contract of contracts">
+    <div>
+      <h1>{{ contract.hotelName }}</h1>
+      <button type="button" class="view-button" (click)="openModal(contract)">
+        View
+      </button>
+    </div>
+  </div>
+
+  <!-- Modal for Contract Details -->
+  <div *ngIf="isModalOpen" class="modal">
+    <div class="modal-content">
+      <button class="close" (click)="closeModal()">×</button>
+      <h2>{{ selectedContract?.hotelName }}</h2>
+      <p>Start Date: {{ selectedContract?.startDate }}</p>
+      <p>End Date: {{ selectedContract?.endDate }}</p>
+      <ul>
+        <li *ngFor="let room of selectedContract?.roomDetails">
+          {{ room.roomType }} - {{ room.pricePerPerson }} per person
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
