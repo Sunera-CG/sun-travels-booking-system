@@ -1,7 +1,7 @@
 <div class="contract-list">
   <h2>Contracts</h2>
-  <div *ngFor="let contract of contracts">
-    <div>
+  <div class="contract-container" *ngFor="let contract of contracts">
+    <div class="contract-container-box">
       <h1>{{ contract.hotelName }}</h1>
       <button type="button" class="view-button" (click)="openModal(contract)">
         View Contract
@@ -16,30 +16,37 @@
         <button class="close-button" (click)="closeModal()">×</button>
         <h2>{{ selectedContract?.hotelName }}</h2>
       </div>
-      <p>
-        This contract is valid from
-        {{ selectedContract?.startDate | date : "yyyy-MM-dd" }}
-        to
-        {{ selectedContract?.endDate | date : "yyyy-MM-dd" }}
-      </p>
-      <table>
-        <thead>
-          <tr>
-            <th>Room Type</th>
-            <th>Price</th>
-            <th>No of Rooms</th>
-            <th>Max Adults</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let room of selectedContract?.roomDetails">
-            <td>{{ room.roomType }}</td>
-            <td>${{ room.pricePerPerson }}</td>
-            <td>{{ room.numberOfRooms }}</td>
-            <td>{{ room.maxAdults }}</td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="view-popup-details">
+        <p>
+          This contract is valid from
+          {{ selectedContract?.startDate | date : "yyyy-MM-dd" }}
+          to
+          {{ selectedContract?.endDate | date : "yyyy-MM-dd" }}
+        </p>
+        <p>
+          Mark up rate for this contract is
+          {{ (selectedContract?.markUp || 0) * 100 }} %
+        </p>
+        <table>
+          <thead>
+            <tr>
+              <th>Room Type</th>
+              <th>Price</th>
+              <th>No of Rooms</th>
+              <th>Max Adults</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let room of selectedContract?.roomDetails">
+              <td>{{ room.roomType }}</td>
+              <td>$ {{ room.pricePerPerson }}</td>
+              <td>{{ room.numberOfRooms }}</td>
+              <td>{{ room.maxAdults }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <p><i>All above rates are per person, per night</i></p>
+      </div>
     </div>
   </div>
 </div>
