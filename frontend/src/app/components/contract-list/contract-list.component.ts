@@ -25,7 +25,7 @@ export class ContractListComponent implements OnInit {
   }
 
   openModal(contract: Contract): void {
-    this.selectedContract = contract; // Pass a single contract, not an array
+    this.selectedContract = contract;
     this.isModalOpen = true;
   }
 

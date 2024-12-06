@@ -1,1 +1,68 @@
-/* You can add global styles to this file, and also import other style files */
+/* styles.scss or styles.css */
+@font-face {
+  font-family: "Garamond-Regular";
+  src: url("./assets/fonts/AGaramondPro-Regular.otf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Garamond-Bold";
+  src: url("./assets/fonts/AGaramondPro-Bold.otf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Garamond-Italic";
+  src: url("./assets/fonts/AGaramondPro-Italic.otf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Montserrat-Regular";
+  src: url("./assets/fonts/Montserrat-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Montserrat-Medium";
+  src: url("./assets/fonts/Montserrat-Medium.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Montserrat-Italic";
+  src: url("./assets/fonts/Montserrat-Italic.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Montserrat-Bold";
+  src: url("./assets/fonts/Montserrat-Bold.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+html {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  height: 100%;
+  width: 100%;
+  font-family: "Montserrat-Regular";
+  overflow-x: hidden;
+}
+
+:root {
+  --main-color: #c4c4c4;
+  --main-color-hover: #afafaf;
+  --secondary-color: #e0b973;
+  --secondary-color-hover: #ebb755;
+}

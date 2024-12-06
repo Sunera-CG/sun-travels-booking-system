@@ -4,23 +4,42 @@
     <div>
       <h1>{{ contract.hotelName }}</h1>
       <button type="button" class="view-button" (click)="openModal(contract)">
-        View
+        View Contract
       </button>
     </div>
   </div>
 
-  <!-- Modal for Contract Details -->
-  <div *ngIf="isModalOpen" class="modal">
-    <div class="modal-content">
-      <button class="close" (click)="closeModal()">×</button>
-      <h2>{{ selectedContract?.hotelName }}</h2>
-      <p>Start Date: {{ selectedContract?.startDate }}</p>
-      <p>End Date: {{ selectedContract?.endDate }}</p>
-      <ul>
-        <li *ngFor="let room of selectedContract?.roomDetails">
-          {{ room.roomType }} - {{ room.pricePerPerson }} per person
-        </li>
-      </ul>
+  <!-- PopUp for Contract Details -->
+  <div *ngIf="isModalOpen" class="view-popup">
+    <div class="view-popup-content">
+      <div class="view-popup-topic">
+        <button class="close-button" (click)="closeModal()">×</button>
+        <h2>{{ selectedContract?.hotelName }}</h2>
+      </div>
+      <p>
+        This contract is valid from
+        {{ selectedContract?.startDate | date : "yyyy-MM-dd" }}
+        to
+        {{ selectedContract?.endDate | date : "yyyy-MM-dd" }}
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th>Room Type</th>
+            <th>Price</th>
+            <th>No of Rooms</th>
+            <th>Max Adults</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let room of selectedContract?.roomDetails">
+            <td>{{ room.roomType }}</td>
+            <td>${{ room.pricePerPerson }}</td>
+            <td>{{ room.numberOfRooms }}</td>
+            <td>{{ room.maxAdults }}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
