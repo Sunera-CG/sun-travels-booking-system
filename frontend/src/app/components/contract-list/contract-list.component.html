@@ -92,32 +92,40 @@
 
     <!-- Add Contract Form -->
     @if (isAddContractOpen) {
-    <div class="add-contract-form">
+    <div class="add-contract-form-main">
       <div class="add-contract-form-container">
         <div class="view-popup-topic">
           <button class="close-button" (click)="closeAddContract()">×</button>
           <h2>Add Contract</h2>
         </div>
-        <form (ngSubmit)="submitAddContract()">
-          <label for="hotelName">Hotel Name</label>
-          <input
-            id="hotelName"
-            type="text"
-            [(ngModel)]="newContract.hotelName"
-          />
+        <form class="add-contract-form" (ngSubmit)="submitAddContract()">
+          <div class="add-contract-input">
+            <label for="hotelName">Hotel Name</label>
+            <input
+              id="hotelName"
+              type="text"
+              [(ngModel)]="newContract.hotelName"
+            />
+          </div>
 
-          <label for="startDate">Start Date</label>
-          <input
-            id="startDate"
-            type="date"
-            [(ngModel)]="newContract.startDate"
-          />
+          <div class="add-contract-input">
+            <label for="startDate">Start Date</label>
+            <input
+              id="startDate"
+              type="date"
+              [(ngModel)]="newContract.startDate"
+            />
+          </div>
 
-          <label for="endDate">End Date</label>
-          <input id="endDate" type="date" [(ngModel)]="newContract.endDate" />
+          <div class="add-contract-input">
+            <label for="endDate">End Date</label>
+            <input id="endDate" type="date" [(ngModel)]="newContract.endDate" />
+          </div>
 
-          <label for="markUp">Mark Up Rate (%)</label>
-          <input id="markUp" type="number" [(ngModel)]="newContract.markUp" />
+          <div class="add-contract-input">
+            <label for="markUp">Mark Up Rate (%)</label>
+            <input id="markUp" type="number" [(ngModel)]="newContract.markUp" />
+          </div>
 
           <div formArrayName="roomDetails">
             @for (room of newContract.roomDetails; track room) {

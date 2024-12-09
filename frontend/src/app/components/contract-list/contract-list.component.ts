@@ -32,16 +32,6 @@ export class ContractListComponent implements OnInit {
     ],
   };
 
-  // Function to add a new room detail
-  addRoom() {
-    this.newContract.roomDetails.push({
-      roomType: '',
-      pricePerPerson: 0,
-      numberOfRooms: 0,
-      maxAdults: 0,
-    });
-  }
-
   constructor(private contractService: ContractService) {}
 
   ngOnInit(): void {
@@ -93,12 +83,31 @@ export class ContractListComponent implements OnInit {
     };
   }
 
+  // Function to add a new room detail
+  addRoom() {
+    this.newContract.roomDetails.push({
+      roomType: '',
+      pricePerPerson: 0,
+      numberOfRooms: 0,
+      maxAdults: 0,
+    });
+  }
+
   submitAddContract(): void {
-    this.contractService.addContract(this.newContract).subscribe(() => {
-      this.closeAddContract();
-      this.contractService.getAllContracts().subscribe((contracts) => {
-        this.contracts = contracts;
-      });
+    this.contractService.addContract(this.newContract).subscribe({
+      next: (response) => {
+        // Add the newly created contract to the contracts list
+        this.contracts.push(response); // Assuming the response contains the newly added contract
+
+        // Optionally log the updated contracts list
+        console.log('Updated contracts list:', this.contracts);
+
+        // Close the form after adding the contract
+        this.closeAddContract();
+      },
+      error: (error) => {
+        console.error('Error adding contract:', error);
+      },
     });
   }
 }
