@@ -3,7 +3,7 @@ import { Observable, of } from 'rxjs';
 
 //Define a basic contract model
 export interface Contract {
-  contractId: number;
+  contractId: number | null;
   hotelName: string;
   startDate: Date;
   endDate: Date;
@@ -41,12 +41,6 @@ export class ContractService {
           numberOfRooms: 3,
           maxAdults: 4,
         },
-        {
-          roomType: 'Single',
-          pricePerPerson: 100,
-          numberOfRooms: 3,
-          maxAdults: 4,
-        },
       ],
     },
     {
@@ -77,5 +71,10 @@ export class ContractService {
   //simulate an API call to get all contractsgetContracts(): Observable<Contract[]> {
   getAllContracts(): Observable<Contract[]> {
     return of(this.contracts);
+  }
+
+  addContract(contract: Contract): Observable<Contract> {
+    this.contracts.push(contract);
+    return of(contract);
   }
 }

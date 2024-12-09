@@ -1,52 +1,119 @@
 <div class="contract-list">
-  <h2>Contracts</h2>
-  <div class="contract-container" *ngFor="let contract of contracts">
-    <div class="contract-container-box">
-      <h1>{{ contract.hotelName }}</h1>
-      <button type="button" class="view-button" (click)="openModal(contract)">
-        View Contract
-      </button>
+  <div class="contract-topic">
+    <h2>Contracts</h2>
+    <div>
+      <div class="search-container">
+        <div class="search-container-box">
+          <input
+            type="text"
+            [(ngModel)]="searchTerm"
+            placeholder="Enter hotel name"
+          />
+          <button
+            type="button"
+            class="search-button"
+            (click)="searchContract()"
+          >
+            Search
+          </button>
+        </div>
+        <div>
+          <button
+            type="button"
+            class="add-contract-button"
+            (click)="openAddContract()"
+          >
+            Add Contract
+          </button>
+        </div>
+      </div>
     </div>
-  </div>
 
-  <!-- PopUp for Contract Details -->
-  <div *ngIf="isModalOpen" class="view-popup">
-    <div class="view-popup-content">
-      <div class="view-popup-topic">
-        <button class="close-button" (click)="closeModal()">×</button>
-        <h2>{{ selectedContract?.hotelName }}</h2>
-      </div>
-      <div class="view-popup-details">
-        <p>
-          This contract is valid from
-          {{ selectedContract?.startDate | date : "yyyy-MM-dd" }}
-          to
-          {{ selectedContract?.endDate | date : "yyyy-MM-dd" }}
-        </p>
-        <p>
-          Mark up rate for this contract is
-          {{ (selectedContract?.markUp || 0) * 100 }} %
-        </p>
-        <table>
-          <thead>
-            <tr>
-              <th>Room Type</th>
-              <th>Price</th>
-              <th>No of Rooms</th>
-              <th>Max Adults</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let room of selectedContract?.roomDetails">
-              <td>{{ room.roomType }}</td>
-              <td>$ {{ room.pricePerPerson }}</td>
-              <td>{{ room.numberOfRooms }}</td>
-              <td>{{ room.maxAdults }}</td>
-            </tr>
-          </tbody>
-        </table>
-        <p><i>All above rates are per person, per night</i></p>
+    <!-- Contract List -->
+    @for (contract of contracts; track contract) {
+    <div class="contract-container">
+      <div class="contract-container-box">
+        <h1>{{ contract.hotelName }}</h1>
+        <button
+          type="button"
+          class="view-button"
+          (click)="openViewPopUp(contract)"
+        >
+          View Contract
+        </button>
       </div>
     </div>
+    }
+
+    
+
+  <!-- Add Contract Form -->
+  @if (isAddContractOpen) {
+  <div class="add-contract-form">
+    <div class="add-contract-form-container">
+      <div class="view-popup-topic">
+        <button class="close-button" (click)="closeAddContract()">×</button>
+        <h2>Add Contract</h2>
+      </div>
+      <form (ngSubmit)="submitAddContract()">
+        <label for="hotelName">Hotel Name</label>
+        <input id="hotelName" type="text" [(ngModel)]="newContract.hotelName" />
+
+        <label for="startDate">Start Date</label>
+        <input id="startDate" type="date" [(ngModel)]="newContract.startDate" />
+
+        <label for="endDate">End Date</label>
+        <input id="endDate" type="date" [(ngModel)]="newContract.endDate" />
+
+        <label for="markUp">Mark Up Rate (%)</label>
+        <input id="markUp" type="number" [(ngModel)]="newContract.markUp" />
+
+        <div formArrayName="roomDetails">
+          @for (room of newContract.roomDetails; track room) {
+          <div class="add-contract-input-container">
+            <label for="roomType{{ room.roomType }}">Room Type</label>
+            <input
+              id="roomType{{ room.roomType }}"
+              type="text"
+              [(ngModel)]="room.roomType"
+              name="roomType{{ room.roomType }}"
+              required
+            />
+          </div>
+          <label for="pricePerPerson{{ room.pricePerPerson }}"
+            >Price per Person</label
+          >
+          <input
+            id="pricePerPerson{{ room.pricePerPerson }}"
+            type="number"
+            [(ngModel)]="room.pricePerPerson"
+            name="pricePerPerson{{ room.pricePerPerson }}"
+            required
+          />
+          <label for="numberOfRooms{{ room.numberOfRooms }}"
+            >Number of Rooms</label
+          >
+          <input
+            id="numberOfRooms{{ room.numberOfRooms }}"
+            type="number"
+            [(ngModel)]="room.numberOfRooms"
+            name="numberOfRooms{{ room.numberOfRooms }}"
+            required
+          />
+          <label for="maxAdults{{ room.maxAdults }}">Max Adults</label>
+          <input
+            id="maxAdults{{ room.maxAdults }}"
+            type="number"
+            [(ngModel)]="room.maxAdults"
+            name="maxAdults{{ room.maxAdults }}"
+            required
+          />
+          }
+        </div>
+        <button type="button" (click)="addRoom()">Add Room</button>
+        <button type="submit" class="submit-contract">Add Contract</button>
+      </form>
+    </div>
   </div>
+  }
 </div>

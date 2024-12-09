@@ -1,7 +1,62 @@
 .contract-list h2 {
-  font-size: 2rem;
+  font-size: 3rem;
   font-family: "Garamond-Bold";
   text-align: center;
+}
+
+.search-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 1rem 10rem 3rem 10rem;
+  gap: 25rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid black;
+}
+
+.search-container-box {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.search-container input {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+}
+
+.search-button {
+  padding: 0.75rem 2rem;
+  background-color: var(--main-color);
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: 550;
+  transition: all 0.3s ease-in-out;
+}
+
+.search-button:hover {
+  background-color: var(--main-color-hover);
+  box-shadow: 0 0 1rem 0.1rem var(--main-color-hover);
+}
+
+.add-contract-button {
+  padding: 0.75rem 2rem;
+  background-color: var(--secondary-color);
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: 550;
+  transition: all 0.3s ease-in-out;
+}
+
+.add-contract-button:hover {
+  background-color: var(--secondary-color-hover);
+  box-shadow: 0 0 1rem 0.1rem var(--secondary-color-hover);
 }
 
 .contract-container {
@@ -9,7 +64,7 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  margin: 1rem 2rem;
+  margin: 1rem 10rem;
   border: 2px solid black;
   border-radius: 0.5rem;
   transition: all 0.4s ease-in-out;
@@ -23,12 +78,19 @@
 .contract-container-box {
   display: flex;
   justify-content: space-between;
-  width: 80%;
+  width: 70%;
+}
+
+.contract-container-box h1 {
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  font-family: "Garamond-Regular";
 }
 
 .view-button {
   cursor: pointer;
-  padding: 0.75rem 1rem;
+  padding: 0.8rem 1.5rem;
   background-color: var(--main-color);
   color: black;
   border: none;
@@ -36,6 +98,7 @@
   font-size: 1rem;
   font-weight: 550;
   transition: all 0.3s ease-in-out;
+  margin: 1rem 0;
 }
 
 .view-button:hover {
@@ -60,6 +123,7 @@
 .view-popup-topic h2 {
   font-size: 2rem;
   margin: 0;
+  padding: 0;
 }
 
 .view-popup {
@@ -125,4 +189,25 @@ td {
 th {
   background-color: var(--main-color);
   font-size: 1.1rem;
+}
+
+.add-contract-form {
+  display: flex;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.add-contract-form-container {
+  background-color: white;
+  border: 1px solid #888;
+  width: 50%;
+  border-radius: 1rem;
 }
