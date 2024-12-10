@@ -1,0 +1,104 @@
+<div class="add-contract-form-main" *ngIf="isAddContractOpen">
+  <div class="add-contract-form-container">
+    <div class="add-contract-popup-topic">
+      <button class="close-button" (click)="closeAddContract()">×</button>
+      <h2>Add Contract</h2>
+    </div>
+    <form class="add-contract-form" (ngSubmit)="submit()">
+      <div class="add-contract-input">
+        <label for="hotelName">Hotel Name</label>
+        <input
+          id="hotelName"
+          type="text"
+          [(ngModel)]="newContract.hotelName"
+          name="hotelName"
+        />
+        <p class="error-message" *ngIf="isHotelNameFilled">
+          Hotel Name is required.
+        </p>
+      </div>
+
+      <div class="add-contract-input">
+        <label for="startDate">Start Date</label>
+        <input
+          id="startDate"
+          type="date"
+          [(ngModel)]="newContract.startDate"
+          name="startDate"
+        />
+        <p class="error-message" *ngIf="isStartDateFilled">
+          Start Date is required.
+        </p>
+      </div>
+
+      <div class="add-contract-input">
+        <label for="endDate">End Date</label>
+        <input
+          id="endDate"
+          type="date"
+          [(ngModel)]="newContract.endDate"
+          name="endDate"
+        />
+        <p class="error-message" *ngIf="isEndDateFilled">
+          End Date is required.
+        </p>
+      </div>
+
+      <div class="add-contract-input">
+        <label for="markUp">Mark Up Rate (%)</label>
+        <input
+          id="markUp"
+          type="number"
+          [(ngModel)]="newContract.markUpRate"
+          name="markUpRate"
+        />
+      </div>
+
+      <div *ngFor="let room of newContract.roomDetails; let i = index">
+        <div class="add-contract-input-container">
+          <label for="roomType{{ i }}">Room Type</label>
+          <input
+            id="roomType{{ i }}"
+            type="text"
+            [(ngModel)]="room.roomType"
+            [name]="'roomType' + i"
+            required
+          />
+        </div>
+        <div class="add-contract-input-container">
+          <label for="pricePerPerson{{ i }}">Price per Person</label>
+          <input
+            id="pricePerPerson{{ i }}"
+            type="number"
+            [(ngModel)]="room.pricePerPerson"
+            [name]="'pricePerPerson' + i"
+            required
+          />
+        </div>
+        <div class="add-contract-input-container">
+          <label for="numberOfRooms{{ i }}">Number of Rooms</label>
+          <input
+            id="numberOfRooms{{ i }}"
+            type="number"
+            [(ngModel)]="room.numberOfRooms"
+            [name]="'numberOfRooms' + i"
+            required
+          />
+        </div>
+        <div class="add-contract-input-container">
+          <label for="maxAdults{{ i }}">Max Adults</label>
+          <input
+            id="maxAdults{{ i }}"
+            type="number"
+            [(ngModel)]="room.maxAdults"
+            [name]="'maxAdults' + i"
+            required
+          />
+        </div>
+      </div>
+
+      <button type="button" (click)="addRoom()">Add Room</button>
+      <button type="submit" class="submit-contract">Add Contract</button>
+    </form>
+  </div>
+</div>

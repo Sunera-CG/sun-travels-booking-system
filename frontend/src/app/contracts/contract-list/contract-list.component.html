@@ -1,0 +1,15 @@
+<div class="contract-list">
+  <h2>Contracts</h2>
+  <div>
+    <app-contract-search
+      (search)="searchContract($event)"
+      (openAddContract)="openForm()"
+    ></app-contract-search>
+  </div>
+  <app-contract-view [contracts]="contracts"></app-contract-view>
+  <app-contract-add
+    [isAddContractOpen]="isAddContractOpen"
+    (submitContract)="submitAddContract($event)"
+    (closeForm)="closeForm()"
+  ></app-contract-add>
+</div>

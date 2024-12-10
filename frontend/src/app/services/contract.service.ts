@@ -1,23 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-
-//Define a basic RoomDetail model
-export interface RoomDetail {
-  roomType: string;
-  pricePerPerson: number;
-  numberOfRooms: number;
-  maxAdults: number;
-}
-
-//Define a basic contract model
-export interface Contract {
-  hotelName: string;
-  startDate: Date;
-  endDate: Date;
-  markUpRate: number;
-  roomDetails: RoomDetail[];
-}
+import { Observable } from 'rxjs';
+import { Contract } from '../models/contract.model';
 
 @Injectable({
   providedIn: 'root',
@@ -33,5 +17,9 @@ export class ContractService {
 
   getAllContracts(): Observable<Contract[]> {
     return this.http.get<Contract[]>(this.apiUrl);
+  }
+
+  searchContracts(searchTerm: string): Observable<Contract[]> {
+    throw new Error('Method not implemented.');
   }
 }

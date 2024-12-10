@@ -1,0 +1,82 @@
+.add-contract-form-main {
+  display: flex;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.add-contract-form-container {
+  background-color: white;
+  border: 1px solid #888;
+  width: 40%;
+  border-radius: 1rem;
+}
+
+.add-contract-popup-topic {
+  font-family: "Garamond-Bold";
+  display: flex;
+  position: relative;
+  background-color: black;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+  justify-content: center;
+  padding: 1.25rem 0;
+  color: white;
+  margin: 0;
+}
+
+.add-contract-popup-topic h2 {
+  font-size: 2rem;
+  margin: 0;
+  padding: 0;
+}
+
+.add-contract-form {
+  display: flex;
+  flex-direction: column;
+  margin: 1rem;
+}
+
+.add-contract-input {
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.add-contract-input input {
+  flex: 1;
+  padding: 0.5rem;
+}
+
+.add-contract-input label {
+  width: 12rem;
+}
+
+.close-button {
+  background-color: var(--main-color);
+  font-size: 1.5rem;
+  font-weight: bold;
+  position: absolute;
+  border: 2px solid black;
+  border-radius: 0.25rem;
+  border-top-right-radius: 0.8rem;
+  right: 0rem;
+  top: 0rem;
+  transition: all 0.3s ease-in-out;
+}
+
+.close-button:hover,
+.close-button:focus {
+  background-color: var(--main-color-hover);
+  cursor: pointer;
+}

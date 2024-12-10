@@ -1,8 +1,7 @@
 package com.suntravels.callcenter.service;
 
-import com.suntravels.callcenter.dto.AvailableContract;
+
 import com.suntravels.callcenter.dto.ContractDTO;
-import com.suntravels.callcenter.dto.SearchDTO;
 import com.suntravels.callcenter.model.Contract;
 import com.suntravels.callcenter.model.RoomDetail;
 import com.suntravels.callcenter.repository.ContractRepository;
@@ -11,9 +10,8 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.List;
-import java.util.Objects;
+
 
 
 @Service
@@ -54,7 +52,7 @@ public class ContractService {
                 .startDate(contractDTO.getStartDate())
                 .endDate(contractDTO.getEndDate())
                 .markUpRate(contractDTO.getMarkUpRate())
-                .roomDetails(contractDTO.getRoomDetailDTOS().stream()      // Map room details from DTO to RoomDetail objects
+                .roomDetails(contractDTO.getRoomDetails().stream()      // Map room details from DTO to RoomDetail objects
                         .map( roomDetailDTO ->
                                 RoomDetail.builder()
                                         .roomType(roomDetailDTO.getRoomType())

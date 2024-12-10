@@ -1,0 +1,21 @@
+<div class="search-container">
+  <div class="search-container-box">
+    <input
+      type="text"
+      [(ngModel)]="searchTerm"
+      placeholder="Enter hotel name"
+    />
+    <button type="button" class="search-button" (click)="searchContract()">
+      Search
+    </button>
+  </div>
+  <div>
+    <button
+      type="button"
+      class="add-contract-button"
+      (click)="openAddContract.emit()"
+    >
+      Add Contract
+    </button>
+  </div>
+</div>

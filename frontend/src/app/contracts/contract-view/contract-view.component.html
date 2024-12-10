@@ -1,0 +1,56 @@
+<!-- Contract List -->
+@for (contract of contracts; track contract) {
+<div class="contract-container">
+  <div class="contract-container-box">
+    <h1>{{ contract.hotelName }}</h1>
+    <button type="button" class="view-button" (click)="viewContract(contract)">
+      View Contract
+    </button>
+  </div>
+</div>
+}
+
+<!-- PopUp for Contract Details -->
+@if (isViewPopUpOpen) {
+<div class="view-popup">
+  <div class="view-popup-content">
+    <div class="view-popup-topic">
+      <button class="close-button" (click)="closeViewPopUp()">×</button>
+      <h2>{{ selectedContract?.hotelName }}</h2>
+    </div>
+    <div class="view-popup-details">
+      <p>
+        This contract is valid from
+        {{ selectedContract?.startDate | date : "yyyy-MM-dd" }}
+        to
+        {{ selectedContract?.endDate | date : "yyyy-MM-dd" }}
+      </p>
+      <p>
+        Mark up rate for this contract is
+        {{ selectedContract?.markUpRate }} %
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th>Room Type</th>
+            <th>Price</th>
+            <th>No of Rooms</th>
+            <th>Max Adults</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (room of selectedContract?.roomDetails; track room) {
+          <tr>
+            <td>{{ room.roomType }}</td>
+            <td>$ {{ room.pricePerPerson }}</td>
+            <td>{{ room.numberOfRooms }}</td>
+            <td>{{ room.maxAdults }}</td>
+          </tr>
+          }
+        </tbody>
+      </table>
+      <p><i>All above rates are per person, per night</i></p>
+    </div>
+  </div>
+</div>
+}

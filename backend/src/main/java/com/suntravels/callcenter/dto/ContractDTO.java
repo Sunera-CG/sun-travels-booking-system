@@ -63,5 +63,5 @@ public class ContractDTO {
      */
     @NotEmpty(message = "Room details are required")
     @Valid
-    private List<RoomDetailDTO> roomDetailDTOS;
+    private List<RoomDetailDTO> roomDetails;
 }
