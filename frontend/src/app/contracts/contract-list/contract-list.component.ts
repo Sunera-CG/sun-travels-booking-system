@@ -23,9 +23,7 @@ import { Contract } from '../../models/contract.model';
 export class ContractListComponent implements OnInit {
   contracts: Contract[] = [];
   isAddContractOpen = false;
-
-  // Search term for filtering contracts
-  searchTerm: string = '';
+  isContractsNotFound = false;
 
   constructor(private contractService: ContractService) {}
 
@@ -38,11 +36,20 @@ export class ContractListComponent implements OnInit {
   }
 
   searchContract(searchTerm: string): void {
-    this.contractService
-      .searchContracts(searchTerm)
-      .subscribe((filteredContracts: Contract[]) => {
+    this.isContractsNotFound = false;
+    if (searchTerm === '') {
+      this.ngOnInit();
+    }
+    this.contractService.searchContracts(searchTerm).subscribe(
+      (filteredContracts: Contract[]) => {
         this.contracts = filteredContracts;
-      });
+      },
+      (error) => {
+        if (error.status === 400) {
+          this.isContractsNotFound = true;
+        }
+      }
+    );
   }
 
   openForm(): void {

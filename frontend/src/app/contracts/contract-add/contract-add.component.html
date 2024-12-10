@@ -1,4 +1,6 @@
-<div class="add-contract-form-main" *ngIf="isAddContractOpen">
+<!-- Add Contract Form -->
+@if (isAddContractOpen) {
+<div class="add-contract-form-main">
   <div class="add-contract-form-container">
     <div class="add-contract-popup-topic">
       <button class="close-button" (click)="closeAddContract()">×</button>
@@ -13,9 +15,11 @@
           [(ngModel)]="newContract.hotelName"
           name="hotelName"
         />
-        <p class="error-message" *ngIf="isHotelNameFilled">
-          Hotel Name is required.
-        </p>
+        @if(isHotelNameFilled){
+        <p class="error-message">Hotel Name is required.</p>
+        }@else {
+        <p class="error-message"></p>
+        }
       </div>
 
       <div class="add-contract-input">
@@ -26,9 +30,11 @@
           [(ngModel)]="newContract.startDate"
           name="startDate"
         />
-        <p class="error-message" *ngIf="isStartDateFilled">
-          Start Date is required.
-        </p>
+        @if(isStartDateFilled){
+        <p class="error-message">Start Date is required.</p>
+        }@else {
+        <p class="error-message"></p>
+        }
       </div>
 
       <div class="add-contract-input">
@@ -39,9 +45,13 @@
           [(ngModel)]="newContract.endDate"
           name="endDate"
         />
-        <p class="error-message" *ngIf="isEndDateFilled">
-          End Date is required.
-        </p>
+        @if (isEndDateFilled) {
+        <p class="error-message">End Date is required.</p>
+        <!-- }@else if (isEndDateBeforeStartDate) {
+              <p class="error-message">End Date should be after Start Date.</p> -->
+        }@else {
+        <p class="error-message"></p>
+        }
       </div>
 
       <div class="add-contract-input">
@@ -54,51 +64,51 @@
         />
       </div>
 
-      <div *ngFor="let room of newContract.roomDetails; let i = index">
+      <div formArrayName="roomDetails">
+        @for (room of newContract.roomDetails; track room) {
         <div class="add-contract-input-container">
-          <label for="roomType{{ i }}">Room Type</label>
+          <label for="roomType{{ room.roomType }}">Room Type</label>
           <input
-            id="roomType{{ i }}"
+            id="roomType{{ room.roomType }}"
             type="text"
             [(ngModel)]="room.roomType"
-            [name]="'roomType' + i"
+            name="roomType{{ room.roomType }}"
             required
           />
         </div>
-        <div class="add-contract-input-container">
-          <label for="pricePerPerson{{ i }}">Price per Person</label>
-          <input
-            id="pricePerPerson{{ i }}"
-            type="number"
-            [(ngModel)]="room.pricePerPerson"
-            [name]="'pricePerPerson' + i"
-            required
-          />
-        </div>
-        <div class="add-contract-input-container">
-          <label for="numberOfRooms{{ i }}">Number of Rooms</label>
-          <input
-            id="numberOfRooms{{ i }}"
-            type="number"
-            [(ngModel)]="room.numberOfRooms"
-            [name]="'numberOfRooms' + i"
-            required
-          />
-        </div>
-        <div class="add-contract-input-container">
-          <label for="maxAdults{{ i }}">Max Adults</label>
-          <input
-            id="maxAdults{{ i }}"
-            type="number"
-            [(ngModel)]="room.maxAdults"
-            [name]="'maxAdults' + i"
-            required
-          />
-        </div>
+        <label for="pricePerPerson{{ room.pricePerPerson }}"
+          >Price per Person</label
+        >
+        <input
+          id="pricePerPerson{{ room.pricePerPerson }}"
+          type="number"
+          [(ngModel)]="room.pricePerPerson"
+          name="pricePerPerson{{ room.pricePerPerson }}"
+          required
+        />
+        <label for="numberOfRooms{{ room.numberOfRooms }}"
+          >Number of Rooms</label
+        >
+        <input
+          id="numberOfRooms{{ room.numberOfRooms }}"
+          type="number"
+          [(ngModel)]="room.numberOfRooms"
+          name="numberOfRooms{{ room.numberOfRooms }}"
+          required
+        />
+        <label for="maxAdults{{ room.maxAdults }}">Max Adults</label>
+        <input
+          id="maxAdults{{ room.maxAdults }}"
+          type="number"
+          [(ngModel)]="room.maxAdults"
+          name="maxAdults{{ room.maxAdults }}"
+          required
+        />
+        }
       </div>
-
       <button type="button" (click)="addRoom()">Add Room</button>
       <button type="submit" class="submit-contract">Add Contract</button>
     </form>
   </div>
 </div>
+}

@@ -6,7 +6,13 @@
       (openAddContract)="openForm()"
     ></app-contract-search>
   </div>
+  @if(isContractsNotFound){
+  <div class="error-message">
+    <h3>No Contracts found</h3>
+  </div>
+  }@else{
   <app-contract-view [contracts]="contracts"></app-contract-view>
+  }
   <app-contract-add
     [isAddContractOpen]="isAddContractOpen"
     (submitContract)="submitAddContract($event)"

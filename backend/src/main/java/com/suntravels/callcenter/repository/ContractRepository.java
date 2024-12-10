@@ -16,6 +16,11 @@ import java.util.List;
  */
 @Repository
 public interface ContractRepository extends JpaRepository<Contract,Integer> {
+
+    @Query("SELECT c FROM Contract c WHERE c.hotelName LIKE %:hotelName%")
+    List<Contract> findByHotelName(@Param("hotelName") String hotelName);
+
+
 //    @Query("SELECT new com.suntravels.callcenter.dto.AvaibleContract(r.roomDetailId, r.maxAdults, r.numberOfRooms, r.pricePerPerson, r.roomType) " +
 //            "FROM Contract c " +
 //            "JOIN c.roomDetails r " +
@@ -28,5 +33,8 @@ public interface ContractRepository extends JpaRepository<Contract,Integer> {
 //            @Param("checkoutDate") LocalDate checkoutDate,
 //            @Param("requiredRooms") int requiredRooms,
 //            @Param("requiredAdults") int requiredAdults);
+
+
+
 
 }

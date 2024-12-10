@@ -66,6 +66,14 @@ public class ContractService {
         return contract;
     }
 
+    public List<Contract> searchByName(String hotelName) {
+        List<Contract> filteredContracts = contractRepository.findByHotelName(hotelName);
+        if (filteredContracts.isEmpty()){
+            throw new IllegalStateException("No Contracts Found");
+        }
+        return filteredContracts;
+    }
+
     /**
      * Searches for contracts based on the provided search criteria.
      *

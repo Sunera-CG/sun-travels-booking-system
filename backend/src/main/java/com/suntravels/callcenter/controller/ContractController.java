@@ -50,6 +50,19 @@ public class ContractController {
         return new ResponseEntity<>(contracts, HttpStatus.OK);
     }
 
+
+    /**
+     * Searches for contracts based on the provided hotel name.
+     *
+     * @param hotelName The name of the hotel to search for in the contracts.
+     * @return A ResponseEntity containing a list of contracts matching the hotel name, with HTTP status FOUND (302).
+     */
+    @GetMapping("/{hotelName}")
+    public ResponseEntity<List<Contract>> searchByName(@PathVariable String hotelName){
+        List<Contract> filteredContracts = contractService.searchByName(hotelName);
+        return new ResponseEntity<>(filteredContracts, HttpStatus.OK);
+    }
+
     /**
      * Searches for contracts based on the search criteria provided in SearchDTO.
      *

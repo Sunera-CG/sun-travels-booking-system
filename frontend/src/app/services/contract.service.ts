@@ -20,6 +20,7 @@ export class ContractService {
   }
 
   searchContracts(searchTerm: string): Observable<Contract[]> {
-    throw new Error('Method not implemented.');
+    const searchUrl = `${this.apiUrl}/${searchTerm}`;
+    return this.http.get<Contract[]>(searchUrl);
   }
 }
