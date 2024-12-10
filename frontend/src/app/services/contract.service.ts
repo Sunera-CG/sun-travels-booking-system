@@ -1,80 +1,37 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
+//Define a basic RoomDetail model
+export interface RoomDetail {
+  roomType: string;
+  pricePerPerson: number;
+  numberOfRooms: number;
+  maxAdults: number;
+}
+
 //Define a basic contract model
 export interface Contract {
-  contractId: number | null;
   hotelName: string;
   startDate: Date;
   endDate: Date;
-  markUp: number;
-  roomDetails: {
-    roomType: string;
-    pricePerPerson: number;
-    numberOfRooms: number;
-    maxAdults: number;
-  }[];
+  markUpRate: number;
+  roomDetails: RoomDetail[];
 }
 
 @Injectable({
   providedIn: 'root',
 })
 export class ContractService {
-  // Mock data for contracts
-  private contracts: Contract[] = [
-    {
-      contractId: 1,
-      hotelName: 'Hotel Sunshine',
-      startDate: new Date('2024-01-01'),
-      endDate: new Date('2024-01-07'),
-      markUp: 0.15,
-      roomDetails: [
-        {
-          roomType: 'Single',
-          pricePerPerson: 100,
-          numberOfRooms: 2,
-          maxAdults: 2,
-        },
-        {
-          roomType: 'Double',
-          pricePerPerson: 150,
-          numberOfRooms: 3,
-          maxAdults: 4,
-        },
-      ],
-    },
-    {
-      contractId: 2,
-      hotelName: 'Beachside Resort',
-      startDate: new Date('2024-02-01'),
-      endDate: new Date('2024-02-10'),
-      markUp: 0.15,
-      roomDetails: [
-        {
-          roomType: 'Suite',
-          pricePerPerson: 200,
-          numberOfRooms: 1,
-          maxAdults: 2,
-        },
-        {
-          roomType: 'Family Room',
-          pricePerPerson: 180,
-          numberOfRooms: 2,
-          maxAdults: 4,
-        },
-      ],
-    },
-  ];
+  private apiUrl = 'http://localhost:8080/contracts';
 
-  constructor() {}
-
-  //simulate an API call to get all contractsgetContracts(): Observable<Contract[]> {
-  getAllContracts(): Observable<Contract[]> {
-    return of(this.contracts);
-  }
+  constructor(private http: HttpClient) {}
 
   addContract(contract: Contract): Observable<Contract> {
-    this.contracts.push(contract);
-    return of(contract);
+    return this.http.post<Contract>(this.apiUrl, contract);
+  }
+
+  getAllContracts(): Observable<Contract[]> {
+    return this.http.get<Contract[]>(this.apiUrl);
   }
 }

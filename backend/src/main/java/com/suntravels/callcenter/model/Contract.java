@@ -33,6 +33,9 @@ public class Contract {
     @Column(nullable = false)
     private LocalDate endDate;
 
+    @Column(nullable = false)
+    private Double markUpRate;
+
     /**
      * A list of room details associated with the contract.
      * Each room detail is mapped to the contract and is loaded eagerly.

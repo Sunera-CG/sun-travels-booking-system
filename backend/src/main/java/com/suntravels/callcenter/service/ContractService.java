@@ -53,6 +53,7 @@ public class ContractService {
                 .hotelName(contractDTO.getHotelName())
                 .startDate(contractDTO.getStartDate())
                 .endDate(contractDTO.getEndDate())
+                .markUpRate(contractDTO.getMarkUpRate())
                 .roomDetails(contractDTO.getRoomDetailDTOS().stream()      // Map room details from DTO to RoomDetail objects
                         .map( roomDetailDTO ->
                                 RoomDetail.builder()

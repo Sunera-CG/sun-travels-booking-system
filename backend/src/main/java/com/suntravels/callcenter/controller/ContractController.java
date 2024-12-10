@@ -1,8 +1,6 @@
 package com.suntravels.callcenter.controller;
 
-import com.suntravels.callcenter.dto.AvailableContract;
 import com.suntravels.callcenter.dto.ContractDTO;
-import com.suntravels.callcenter.dto.SearchDTO;
 import com.suntravels.callcenter.model.Contract;
 import com.suntravels.callcenter.service.ContractService;
 import jakarta.validation.Valid;
@@ -19,6 +17,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/contracts")
+@CrossOrigin(origins = "http://localhost:4200")
 public class ContractController {
 
     private final ContractService contractService;

@@ -17,19 +17,21 @@ export class ContractListComponent implements OnInit {
   isAddContractOpen = false;
   selectedContract: Contract | null = null;
 
+  isHotelNameFilled = false;
+  isStartDateFilled = false;
+  isEndDateFilled = false;
+  isMarkupRateFilled = false;
+
   // Search term for filtering contracts
   searchTerm: string = '';
 
   // New contract object to bind to the form
   newContract: Contract = {
-    contractId: null,
     hotelName: '',
     startDate: new Date(),
     endDate: new Date(),
-    markUp: 0,
-    roomDetails: [
-      { roomType: '', pricePerPerson: 0, numberOfRooms: 0, maxAdults: 0 },
-    ],
+    markUpRate: 0,
+    roomDetails: [],
   };
 
   constructor(private contractService: ContractService) {}
@@ -72,14 +74,11 @@ export class ContractListComponent implements OnInit {
   closeAddContract(): void {
     this.isAddContractOpen = false;
     this.newContract = {
-      contractId: null,
       hotelName: '',
       startDate: new Date(),
       endDate: new Date(),
-      markUp: 0,
-      roomDetails: [
-        { roomType: '', pricePerPerson: 0, numberOfRooms: 0, maxAdults: 0 },
-      ],
+      markUpRate: 0,
+      roomDetails: [],
     };
   }
 
@@ -94,15 +93,11 @@ export class ContractListComponent implements OnInit {
   }
 
   submitAddContract(): void {
+    console.log('Submitting contract:', this.newContract);
     this.contractService.addContract(this.newContract).subscribe({
       next: (response) => {
-        // Add the newly created contract to the contracts list
-        this.contracts.push(response); // Assuming the response contains the newly added contract
-
-        // Optionally log the updated contracts list
-        console.log('Updated contracts list:', this.contracts);
-
-        // Close the form after adding the contract
+        console.log('Contract added successfully:', response);
+        this.contracts.push(response);
         this.closeAddContract();
       },
       error: (error) => {
