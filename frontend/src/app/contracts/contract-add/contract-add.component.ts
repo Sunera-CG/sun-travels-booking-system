@@ -25,7 +25,16 @@ export class ContractAddComponent {
   isHotelNameFilled = false;
   isStartDateFilled = false;
   isEndDateFilled = false;
-  isMarkupRateFilled = false;
+  isEndDateBeforeStartDate = false;
+  isMarkUpRateFilled = false;
+  isMarkUpRateValid = false;
+  isRoomTypeFilled = [];
+  isPricePerPersonFilled = [];
+  isPricePerPersonValid = [];
+  isNumberOfRoomsFilled = [];
+  isNumberOfRoomsValid = [];
+  isMaxAdultsFilled = [];
+  isMaxAdultsValid = [];
 
   // New contract object to bind to the form
   newContract: Contract = {
