@@ -7,107 +7,135 @@
       <h2>Add Contract</h2>
     </div>
     <form class="add-contract-form" (ngSubmit)="submit()">
-      <div class="add-contract-input">
-        <label for="hotelName">Hotel Name</label>
-        <input
-          id="hotelName"
-          type="text"
-          [(ngModel)]="newContract.hotelName"
-          name="hotelName"
-        />
-        @if(isHotelNameFilled){
-        <p class="error-message">Hotel Name is required.</p>
-        }@else {
-        <p class="error-message"></p>
-        }
-      </div>
-
-      <div class="add-contract-input">
-        <label for="startDate">Start Date</label>
-        <input
-          id="startDate"
-          type="date"
-          [(ngModel)]="newContract.startDate"
-          name="startDate"
-        />
-        @if(isStartDateFilled){
-        <p class="error-message">Start Date is required.</p>
-        }@else {
-        <p class="error-message"></p>
-        }
-      </div>
-
-      <div class="add-contract-input">
-        <label for="endDate">End Date</label>
-        <input
-          id="endDate"
-          type="date"
-          [(ngModel)]="newContract.endDate"
-          name="endDate"
-        />
-        @if (isEndDateFilled) {
-        <p class="error-message">End Date is required.</p>
-        <!-- }@else if (isEndDateBeforeStartDate) {
-              <p class="error-message">End Date should be after Start Date.</p> -->
-        }@else {
-        <p class="error-message"></p>
-        }
-      </div>
-
-      <div class="add-contract-input">
-        <label for="markUp">Mark Up Rate (%)</label>
-        <input
-          id="markUp"
-          type="number"
-          [(ngModel)]="newContract.markUpRate"
-          name="markUpRate"
-        />
-      </div>
-
-      <div formArrayName="roomDetails">
-        @for (room of newContract.roomDetails; track room) {
-        <div class="add-contract-input-container">
-          <label for="roomType{{ room.roomType }}">Room Type</label>
+      <div class="add-main-details">
+        <div class="add-contract-input">
+          <label for="hotelName">Hotel Name</label>
           <input
-            id="roomType{{ room.roomType }}"
+            id="hotelName"
             type="text"
-            [(ngModel)]="room.roomType"
-            name="roomType{{ room.roomType }}"
-            required
+            [(ngModel)]="newContract.hotelName"
+            name="hotelName"
+            placeholder="Enter Hotel Name"
+          />
+          @if(isHotelNameFilled){
+          <p class="error-message">Hotel Name is required.</p>
+          }@else {
+          <p class="error-message"></p>
+          }
+        </div>
+
+        <div class="add-contract-input">
+          <label for="markUp">Mark Up Rate (%)</label>
+          <input
+            id="markUp"
+            type="number"
+            [(ngModel)]="newContract.markUpRate"
+            name="markUpRate"
+            placeholder="Enter Mark Up Rate"
           />
         </div>
-        <label for="pricePerPerson{{ room.pricePerPerson }}"
-          >Price per Person</label
-        >
-        <input
-          id="pricePerPerson{{ room.pricePerPerson }}"
-          type="number"
-          [(ngModel)]="room.pricePerPerson"
-          name="pricePerPerson{{ room.pricePerPerson }}"
-          required
-        />
-        <label for="numberOfRooms{{ room.numberOfRooms }}"
-          >Number of Rooms</label
-        >
-        <input
-          id="numberOfRooms{{ room.numberOfRooms }}"
-          type="number"
-          [(ngModel)]="room.numberOfRooms"
-          name="numberOfRooms{{ room.numberOfRooms }}"
-          required
-        />
-        <label for="maxAdults{{ room.maxAdults }}">Max Adults</label>
-        <input
-          id="maxAdults{{ room.maxAdults }}"
-          type="number"
-          [(ngModel)]="room.maxAdults"
-          name="maxAdults{{ room.maxAdults }}"
-          required
-        />
-        }
+
+        <div class="add-contract-input">
+          <label for="startDate">Start Date</label>
+          <input
+            id="startDate"
+            type="date"
+            [(ngModel)]="newContract.startDate"
+            name="startDate"
+            [min]="today"
+          />
+          @if(isStartDateFilled){
+          <p class="error-message">Start Date is required.</p>
+          }@else {
+          <p class="error-message"></p>
+          }
+        </div>
+
+        <div class="add-contract-input">
+          <label for="endDate">End Date</label>
+          <input
+            id="endDate"
+            type="date"
+            [(ngModel)]="newContract.endDate"
+            name="endDate"
+            [min]="newContract.startDate"
+          />
+          @if (isEndDateFilled) {
+          <p class="error-message">End Date is required.</p>
+          <!-- }@else if (isEndDateBeforeStartDate) {
+              <p class="error-message">End Date should be after Start Date.</p> -->
+          }@else {
+          <p class="error-message"></p>
+          }
+        </div>
       </div>
-      <button type="button" (click)="addRoom()">Add Room</button>
-      <button type="submit" class="submit-contract">Add Contract</button>
+
+      <!-- Room Details -->
+      <div class="room-details-form">
+        <div
+          class="room-details-container"
+          *ngFor="let room of newContract.roomDetails; let i = index"
+        >
+          <div class="add-contract-input-container">
+            <label>Room Type:</label>
+            <input
+              type="text"
+              [(ngModel)]="room.roomType"
+              name="roomType-{{ i }}"
+              placeholder="Enter Room Type"
+            />
+            <p class="error-message">test</p>
+          </div>
+          <div class="add-contract-input-container">
+            <label>Price Per Person:</label>
+            <input
+              type="number"
+              [(ngModel)]="room.pricePerPerson"
+              name="pricePerPerson-{{ i }}"
+              placeholder="Enter Price Per Person"
+            />
+            <p class="error-message">test</p>
+          </div>
+          <div class="add-contract-input-container">
+            <label>Number of Rooms:</label>
+            <input
+              type="number"
+              [(ngModel)]="room.numberOfRooms"
+              name="numberOfRooms-{{ i }}"
+              placeholder="Enter No.of Rooms"
+            />
+            <p class="error-message">test</p>
+          </div>
+          <div class="add-contract-input-container">
+            <label>Max Adults:</label>
+            <input
+              type="number"
+              [(ngModel)]="room.maxAdults"
+              name="maxAdults-{{ i }}"
+              placeholder="Enter Max Adults"
+            />
+            <p class="error-message">test</p>
+          </div>
+
+          <!-- Remove Room Button (visible from the second room onward) -->
+          <button
+            *ngIf="i > 0"
+            type="button"
+            class="remove-room-button"
+            (click)="removeRoom(i)"
+          >
+            Remove Room Type
+          </button>
+        </div>
+        <p class="error-message">Fill all fields of the room type</p>
+
+        <button type="button" class="add-room-button" (click)="addRoom()">
+          Add Room Type
+        </button>
+      </div>
+      <div class="submit-contract">
+        <button type="submit">Add Contract</button>
+      </div>
     </form>
   </div>
 </div>

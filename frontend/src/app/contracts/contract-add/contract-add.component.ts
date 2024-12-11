@@ -15,6 +15,13 @@ export class ContractAddComponent {
   @Output() submitContract = new EventEmitter<Contract>();
   @Output() closeForm = new EventEmitter<void>();
 
+  today: string = '';
+
+  ngOnInit(): void {
+    const currentDate = new Date();
+    this.today = currentDate.toISOString().split('T')[0]; // Formats today's date as yyyy-MM-dd
+  }
+
   isHotelNameFilled = false;
   isStartDateFilled = false;
   isEndDateFilled = false;
@@ -26,13 +33,13 @@ export class ContractAddComponent {
     hotelName: '',
     startDate: new Date(),
     endDate: new Date(),
-    markUpRate: 0,
+    markUpRate: null,
     roomDetails: [
       {
         roomType: '',
-        pricePerPerson: 0,
-        numberOfRooms: 0,
-        maxAdults: 0,
+        pricePerPerson: null,
+        numberOfRooms: null,
+        maxAdults: null,
       },
     ],
   };
@@ -41,9 +48,9 @@ export class ContractAddComponent {
   addRoom() {
     this.newContract.roomDetails.push({
       roomType: '',
-      pricePerPerson: 0,
-      numberOfRooms: 0,
-      maxAdults: 0,
+      pricePerPerson: null,
+      numberOfRooms: null,
+      maxAdults: null,
     });
   }
 
@@ -52,9 +59,17 @@ export class ContractAddComponent {
     this.closeForm.emit();
   }
 
+  // Function to remove a room detail
+  removeRoom(index: number) {
+    if (this.newContract.roomDetails.length > 1) {
+      this.newContract.roomDetails.splice(index, 1);
+    }
+  }
+
   submit() {
     console.log('Contract Data', this.newContract);
     console.log('Room Details:', this.newContract.roomDetails);
+
     this.submitContract.emit(this.newContract);
     this.newContract = {
       contractId: null,

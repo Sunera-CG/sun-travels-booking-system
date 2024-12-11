@@ -1,9 +1,9 @@
 //Define a basic RoomDetail model
 export interface RoomDetail {
   roomType: string;
-  pricePerPerson: number;
-  numberOfRooms: number;
-  maxAdults: number;
+  pricePerPerson: number | null;
+  numberOfRooms: number | null;
+  maxAdults: number | null;
 }
 
 //Define a basic contract model
@@ -12,6 +12,6 @@ export interface Contract {
   hotelName: string;
   startDate: Date;
   endDate: Date;
-  markUpRate: number;
+  markUpRate: number | null;
   roomDetails: RoomDetail[];
 }

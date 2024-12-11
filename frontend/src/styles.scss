@@ -64,3 +64,8 @@ body {
   --secondary-color: #e0b973;
   --secondary-color-hover: #ebb755;
 }
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
