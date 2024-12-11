@@ -2,6 +2,7 @@ package com.suntravels.callcenter.service;
 
 
 import com.suntravels.callcenter.dto.ContractDTO;
+import com.suntravels.callcenter.exception.InvalidIdException;
 import com.suntravels.callcenter.model.Contract;
 import com.suntravels.callcenter.model.RoomDetail;
 import com.suntravels.callcenter.repository.ContractRepository;
@@ -72,6 +73,19 @@ public class ContractService {
             throw new IllegalStateException("No Contracts Found");
         }
         return filteredContracts;
+    }
+
+    /**
+     * Deletes the contract with the specified ID.
+     *
+     * @param contractId the ID of the contract to be deleted.
+     * @throws IllegalStateException if no contract with the given ID exists.
+     */
+    public void deleteContract(Integer contractId) {
+        if(! contractRepository.existsById(contractId)){
+            throw new IllegalStateException("Contract doesn't exit bi this Id");
+        }
+        contractRepository.deleteById(contractId);
     }
 
     /**

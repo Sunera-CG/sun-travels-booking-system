@@ -8,6 +8,7 @@ export interface RoomDetail {
 
 //Define a basic contract model
 export interface Contract {
+  contractId: number | null;
   hotelName: string;
   startDate: Date;
   endDate: Date;

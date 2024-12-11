@@ -3,7 +3,7 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  margin: 1rem 10rem 3rem 10rem;
+  margin: 1rem 12rem 3rem 12rem;
   gap: 25rem;
   padding-bottom: 1rem;
   border-bottom: 1px solid black;
@@ -16,11 +16,24 @@
   gap: 1rem;
 }
 
-.search-container input {
-  flex: 1;
-  padding: 0.75rem 1rem;
-  border-radius: 0.5rem;
+.input-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  gap: 1rem;
+  border: 2px solid black;
+  border-radius: 0.25rem;
+  padding: 0.55rem 1rem;
+}
+
+.input-container input {
+  width: 100%;
+  border: none;
+  outline: none;
+
   font-size: 1rem;
+  font-style: italic;
 }
 
 .search-button {

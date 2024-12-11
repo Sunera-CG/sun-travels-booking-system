@@ -72,4 +72,18 @@ export class ContractListComponent implements OnInit {
       },
     });
   }
+
+  removeContract(contractId: number): void {
+    this.contractService.removeContract(contractId).subscribe({
+      next: () => {
+        console.log('Contract removed successfully:', contractId);
+        this.contracts = this.contracts.filter(
+          (c) => c.contractId !== contractId
+        );
+      },
+      error: (error) => {
+        console.error('Error removing contract:', error);
+      },
+    });
+  }
 }

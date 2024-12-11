@@ -22,6 +22,7 @@ export class ContractAddComponent {
 
   // New contract object to bind to the form
   newContract: Contract = {
+    contractId: null,
     hotelName: '',
     startDate: new Date(),
     endDate: new Date(),
@@ -56,6 +57,7 @@ export class ContractAddComponent {
     console.log('Room Details:', this.newContract.roomDetails);
     this.submitContract.emit(this.newContract);
     this.newContract = {
+      contractId: null,
       hotelName: '',
       startDate: new Date(),
       endDate: new Date(),

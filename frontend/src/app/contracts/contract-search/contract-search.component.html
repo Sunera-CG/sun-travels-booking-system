@@ -1,11 +1,15 @@
 <div class="search-container">
   <div class="search-container-box">
-    <input
-      type="text"
-      [(ngModel)]="searchTerm"
-      placeholder="Enter hotel name"
-      name="hotelName"
-    />
+    <div class="input-container">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input
+        type="text"
+        [(ngModel)]="searchTerm"
+        placeholder="Enter hotel name"
+        name="hotelName"
+      />
+    </div>
+
     <button type="button" class="search-button" (click)="searchContract()">
       Search
     </button>

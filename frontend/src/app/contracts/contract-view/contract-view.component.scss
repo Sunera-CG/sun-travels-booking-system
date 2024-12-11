@@ -3,7 +3,7 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  margin: 1rem 10rem;
+  margin: 1rem 12rem;
   border: 2px solid black;
   border-radius: 0.5rem;
   transition: all 0.4s ease-in-out;
@@ -17,7 +17,7 @@
 .contract-container-box {
   display: flex;
   justify-content: space-between;
-  width: 70%;
+  width: 80%;
 }
 
 .contract-container-box h1 {
@@ -27,6 +27,12 @@
   font-family: "Garamond-Regular";
 }
 
+.button-container {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+}
+
 .view-button {
   cursor: pointer;
   padding: 0.8rem 1.5rem;
@@ -34,16 +40,41 @@
   color: black;
   border: none;
   border-radius: 0.5rem;
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: 550;
   transition: all 0.3s ease-in-out;
   margin: 1rem 0;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
 .view-button:hover {
   transform: scale(1.05);
   background-color: var(--main-color-hover);
-  box-shadow: 0 0 1rem 0.1rem var(--main-color-hover);
+  box-shadow: 0 0 0.5rem 0.1rem var(--main-color-hover);
+}
+
+.remove-button {
+  cursor: pointer;
+  padding: 0.8rem 1.5rem;
+  background-color: var(--main-color);
+  color: black;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 550;
+  transition: all 0.3s ease-in-out;
+  margin: 1rem 0;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.remove-button:hover {
+  transform: scale(1.05);
+  background-color: var(--main-color-hover);
+  box-shadow: 0 0 0.5rem 0.1rem var(--main-color-hover);
 }
 
 .view-popup-topic {
@@ -84,6 +115,7 @@
   border: 1px solid #888;
   width: 50%;
   border-radius: 1rem;
+  position: relative;
 }
 
 .view-popup-details {
@@ -110,11 +142,11 @@
 }
 
 table {
-  width: 100%;
   border-collapse: collapse;
   margin-top: 2rem;
   border-radius: 0.25rem;
   overflow: hidden;
+  width: 100%;
 }
 
 th,
@@ -123,9 +155,107 @@ td {
   text-align: left;
   border: 1.75px solid black;
   text-align: center;
+  width: 4rem;
 }
 
 th {
   background-color: var(--main-color);
   font-size: 1.1rem;
+}
+
+.status-container {
+  display: flex;
+  gap: 0.5rem;
+  position: absolute;
+  bottom: 1rem;
+  right: 2.5rem;
+  font-style: italic;
+}
+
+.status-value {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.active-status {
+  color: green;
+  font-size: 0.75rem;
+  text-shadow: 2px 0px 4px rgba(22, 103, 7, 0.8);
+}
+
+.Expired-status {
+  color: red;
+  font-size: 0.75rem;
+  text-shadow: 2px 0px 4px rgba(95, 20, 20, 0.8);
+}
+
+.remove-popup-overlay {
+  display: flex;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.remove-popup-content {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  border: 1px solid #888;
+  width: 35%;
+  border-radius: 1rem;
+  position: relative;
+  padding: 1rem;
+}
+
+.remove-popup-content p {
+  font-size: 1.2rem;
+  font-family: "Montserrat-Medium";
+  align-self: center;
+  padding-bottom: 0.5rem;
+}
+
+.yes-button button,
+.no-button button {
+  padding: 0.75rem 2.5rem;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: 550;
+  transition: all 0.3s ease-in-out;
+  color: white;
+}
+
+.yes-button button {
+  background-color: #185209;
+}
+
+.no-button button {
+  background-color: #631809;
+}
+
+.yes-button button:hover,
+.yes-button button:focus {
+  background-color: #1d600d;
+  cursor: pointer;
+  box-shadow: 0 0 0.4rem 0.1rem #1d600d;
+}
+.no-button button:hover,
+.no-button button:focus {
+  background-color: #6d1e0d;
+  cursor: pointer;
+  box-shadow: 0 0 0.4rem 0.1rem #6d1e0d;
 }

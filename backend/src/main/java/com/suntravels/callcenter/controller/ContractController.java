@@ -63,6 +63,19 @@ public class ContractController {
         return new ResponseEntity<>(filteredContracts, HttpStatus.OK);
     }
 
+
+    /**
+     * Deletes a contract by its ID.
+     *
+     * @param contractId the ID of the contract to be deleted.
+     * @return a ResponseEntity indicating the result of the operation.
+     */
+    @DeleteMapping("/{contractId}")
+    public ResponseEntity<Void> deleteContract (@PathVariable Integer contractId){
+        contractService.deleteContract(contractId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     /**
      * Searches for contracts based on the search criteria provided in SearchDTO.
      *

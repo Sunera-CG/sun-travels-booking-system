@@ -11,7 +11,10 @@
     <h3>No Contracts found</h3>
   </div>
   }@else{
-  <app-contract-view [contracts]="contracts"></app-contract-view>
+  <app-contract-view
+    [contracts]="contracts"
+    (removeContract)="removeContract($event)"
+  ></app-contract-view>
   }
   <app-contract-add
     [isAddContractOpen]="isAddContractOpen"

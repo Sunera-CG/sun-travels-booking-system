@@ -3,9 +3,41 @@
 <div class="contract-container">
   <div class="contract-container-box">
     <h1>{{ contract.hotelName }}</h1>
-    <button type="button" class="view-button" (click)="viewContract(contract)">
-      View Contract
-    </button>
+    <div class="button-container">
+      <button
+        type="button"
+        class="view-button"
+        (click)="viewContract(contract)"
+      >
+        <i class="fa-solid fa-eye"></i>
+        View Contract
+      </button>
+      <button
+        type="button"
+        class="remove-button"
+        (click)="openRemoveConfirmation(contract)"
+      >
+        <i class="fa-solid fa-trash-can"></i>
+        Remove Contract
+      </button>
+    </div>
+  </div>
+</div>
+}
+
+<!-- Confirmation Popup for Remove Contract -->
+@if (isRemovePopupOpen) {
+<div class="remove-popup-overlay">
+  <div class="remove-popup-content">
+    <p>Are you sure you want to remove this contract?</p>
+    <div class="button-container">
+      <div class="yes-button">
+        <button (click)="confirmRemoveContract()">Yes</button>
+      </div>
+      <div class="no-button">
+        <button (click)="cancelRemoveContract()">No</button>
+      </div>
+    </div>
   </div>
 </div>
 }
@@ -50,6 +82,16 @@
         </tbody>
       </table>
       <p><i>All above rates are per person, per night</i></p>
+    </div>
+    <div class="status-container">
+      <div class="status-label">Status :</div>
+      <div class="status-value">
+        @if(isActive){
+        <span class="active-status"><i class="fa-solid fa-circle"></i></span
+        >Active }@else {
+        <span class="Expired-status"><i class="fa-solid fa-circle"></i></span
+        >Expired }
+      </div>
     </div>
   </div>
 </div>

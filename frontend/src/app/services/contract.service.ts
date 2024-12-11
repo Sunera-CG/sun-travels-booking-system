@@ -23,4 +23,9 @@ export class ContractService {
     const searchUrl = `${this.apiUrl}/${searchTerm}`;
     return this.http.get<Contract[]>(searchUrl);
   }
+
+  removeContract(contractId: number): Observable<void> {
+    const removeUrl = `${this.apiUrl}/${contractId}`;
+    return this.http.delete<void>(removeUrl);
+  }
 }
