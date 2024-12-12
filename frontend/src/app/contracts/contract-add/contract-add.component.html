@@ -17,7 +17,7 @@
             name="hotelName"
             placeholder="Enter Hotel Name"
           />
-          @if(isHotelNameFilled){
+          @if(!isHotelNameFilled){
           <p class="error-message">Hotel Name is required.</p>
           }@else {
           <p class="error-message"></p>
@@ -33,9 +33,9 @@
             name="markUpRate"
             placeholder="Enter Mark Up Rate"
           />
-          @if(isMarkUpRateFilled){
+          @if(!isMarkUpRateFilled){
           <p class="error-message">Mark Up Rate is required.</p>
-          }@else if(isMarkUpRateValid){
+          }@else if(!isMarkUpRateValid){
           <p class="error-message">Mark Up Rate should between 1-100</p>
           }@else{
           <p class="error-message"></p>
@@ -51,7 +51,7 @@
             name="startDate"
             [min]="today"
           />
-          @if(isStartDateFilled){
+          @if(!isStartDateFilled){
           <p class="error-message">Start Date is required.</p>
           }@else {
           <p class="error-message"></p>
@@ -67,9 +67,9 @@
             name="endDate"
             [min]="newContract.startDate"
           />
-          @if (isEndDateFilled) {
+          @if (!isEndDateFilled) {
           <p class="error-message">End Date is required.</p>
-          }@else if (isEndDateBeforeStartDate) {
+          }@else if (!isEndDateBeforeStartDate) {
           <p class="error-message">End Date should be after Start Date.</p>
           }@else {
           <p class="error-message"></p>
@@ -91,7 +91,7 @@
               name="roomType-{{ i }}"
               placeholder="Enter Room Type"
             />
-            @if (isRoomTypeFilled[i]) {
+            @if (!isRoomTypeFilled[i]) {
             <p class="error-message">Room Type is required.</p>
             }@else {
             <p class="error-message"></p>
@@ -106,12 +106,10 @@
               name="pricePerPerson-{{ i }}"
               placeholder="Enter Price Per Person"
             />
-            @if (isPricePerPersonFilled[i]) {
+            @if (!isPricePerPersonFilled[i]) {
             <p class="error-message">Price Per Person is required.</p>
-            }@else if (isPricePerPersonValid[i]) {
-            <p class="error-message">
-              Price Per Person should be price in number
-            </p>
+            }@else if (!isPricePerPersonValid[i]) {
+            <p class="error-message">Price Per Person should be positive</p>
             }@else {
             <p class="error-message"></p>
             }
@@ -125,10 +123,10 @@
               name="numberOfRooms-{{ i }}"
               placeholder="Enter No.of Rooms"
             />
-            @if (isNumberOfRoomsFilled[i]) {
+            @if (!isNumberOfRoomsFilled[i]) {
             <p class="error-message">Number of Rooms is required.</p>
-            }@else if (isNumberOfRoomsValid) {
-            <p class="error-message">Number of Rooms should be a number</p>
+            }@else if (!isNumberOfRoomsValid[i]) {
+            <p class="error-message">Number of rooms should be positive</p>
             }@else {
             <p class="error-message"></p>
             }
@@ -142,11 +140,10 @@
               name="maxAdults-{{ i }}"
               placeholder="Enter Max Adults"
             />
-            <p class="error-message">test</p>
-            @if(isMaxAdultsFilled[i]){
+            @if(!isMaxAdultsFilled[i]){
             <p class="error-message">Max Adults is required.</p>
-            }@else if (isMaxAdultsValid[i]) {
-            <p class="error-message">Max Adults should be a number</p>
+            }@else if (!isMaxAdultsValid[i]) {
+            <p class="error-message">Max Adults should be positive number</p>
             }@else {
             <p class="error-message"></p>
             }
@@ -168,7 +165,9 @@
         </button>
       </div>
       <div class="submit-contract">
-        <button type="submit">Add Contract</button>
+        <button type="submit" [disabled]="isSubmitting">
+          {{ isSubmitting ? "Saving..." : "Add Contract" }}
+        </button>
       </div>
     </form>
   </div>

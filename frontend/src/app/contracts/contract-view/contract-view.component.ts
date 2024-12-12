@@ -22,7 +22,10 @@ export class ContractViewComponent {
   // View contract details
   viewContract(contract: Contract): void {
     this.selectedContract = contract;
-    if (this.selectedContract.endDate >= new Date()) {
+    if (
+      this.selectedContract.endDate &&
+      this.selectedContract.endDate >= new Date()
+    ) {
       this.isActive = false;
     }
     this.isViewPopUpOpen = true;

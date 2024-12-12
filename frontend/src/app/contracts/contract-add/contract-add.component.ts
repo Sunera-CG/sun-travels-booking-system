@@ -16,32 +16,28 @@ export class ContractAddComponent {
   @Output() closeForm = new EventEmitter<void>();
 
   today: string = '';
+  isSubmitting: boolean = false;
 
-  ngOnInit(): void {
-    const currentDate = new Date();
-    this.today = currentDate.toISOString().split('T')[0]; // Formats today's date as yyyy-MM-dd
-  }
-
-  isHotelNameFilled = false;
-  isStartDateFilled = false;
-  isEndDateFilled = false;
-  isEndDateBeforeStartDate = false;
-  isMarkUpRateFilled = false;
-  isMarkUpRateValid = false;
-  isRoomTypeFilled = [];
-  isPricePerPersonFilled = [];
-  isPricePerPersonValid = [];
-  isNumberOfRoomsFilled = [];
-  isNumberOfRoomsValid = [];
-  isMaxAdultsFilled = [];
-  isMaxAdultsValid = [];
+  isHotelNameFilled = true;
+  isStartDateFilled = true;
+  isEndDateFilled = true;
+  isEndDateBeforeStartDate = true;
+  isMarkUpRateFilled = true;
+  isMarkUpRateValid = true;
+  isRoomTypeFilled: boolean[] = [];
+  isPricePerPersonFilled: boolean[] = [];
+  isPricePerPersonValid: boolean[] = [];
+  isNumberOfRoomsFilled: boolean[] = [];
+  isNumberOfRoomsValid: boolean[] = [];
+  isMaxAdultsFilled: boolean[] = [];
+  isMaxAdultsValid: boolean[] = [];
 
   // New contract object to bind to the form
   newContract: Contract = {
     contractId: null,
     hotelName: '',
-    startDate: new Date(),
-    endDate: new Date(),
+    startDate: null,
+    endDate: null,
     markUpRate: null,
     roomDetails: [
       {
@@ -53,6 +49,12 @@ export class ContractAddComponent {
     ],
   };
 
+  ngOnInit(): void {
+    const currentDate = new Date();
+    this.today = currentDate.toISOString().split('T')[0]; // Formats today's date as yyyy-MM-dd
+    this.updateValidationStates();
+  }
+
   // Function to add a new room detail
   addRoom() {
     this.newContract.roomDetails.push({
@@ -61,6 +63,14 @@ export class ContractAddComponent {
       numberOfRooms: null,
       maxAdults: null,
     });
+
+    this.isRoomTypeFilled.push(true);
+    this.isPricePerPersonFilled.push(true);
+    this.isPricePerPersonValid.push(true);
+    this.isNumberOfRoomsFilled.push(true);
+    this.isNumberOfRoomsValid.push(true);
+    this.isMaxAdultsFilled.push(true);
+    this.isMaxAdultsValid.push(true);
   }
 
   // Add the new contract
@@ -75,26 +85,85 @@ export class ContractAddComponent {
     }
   }
 
+  validateForm(): boolean {
+    this.isHotelNameFilled = !!this.newContract.hotelName.trim();
+    this.isStartDateFilled = !!this.newContract.startDate;
+    this.isEndDateFilled = !!this.newContract.endDate;
+    this.isEndDateBeforeStartDate =
+      this.newContract.startDate && this.newContract.endDate
+        ? this.newContract.endDate >= this.newContract.startDate
+        : true;
+    this.isMarkUpRateFilled = this.newContract.markUpRate !== null;
+    this.isMarkUpRateValid =
+      this.newContract.markUpRate !== null &&
+      this.newContract.markUpRate >= 1 &&
+      this.newContract.markUpRate <= 100;
+
+    this.newContract.roomDetails.forEach((room, index) => {
+      this.isRoomTypeFilled[index] = !!room.roomType.trim();
+      this.isPricePerPersonFilled[index] = room.pricePerPerson !== null;
+      this.isPricePerPersonValid[index] =
+        room.pricePerPerson !== null && room.pricePerPerson >= 0;
+      this.isNumberOfRoomsFilled[index] = room.numberOfRooms !== null;
+      this.isNumberOfRoomsValid[index] =
+        room.numberOfRooms !== null && room.numberOfRooms > 0;
+      this.isMaxAdultsFilled[index] = room.maxAdults !== null;
+      this.isMaxAdultsValid[index] =
+        room.maxAdults !== null && room.maxAdults > 0;
+    });
+
+    return (
+      this.isHotelNameFilled &&
+      this.isStartDateFilled &&
+      this.isEndDateFilled &&
+      this.isEndDateBeforeStartDate &&
+      this.isMarkUpRateFilled &&
+      this.isMarkUpRateValid &&
+      this.isRoomTypeFilled.every(Boolean) &&
+      this.isPricePerPersonFilled.every(Boolean) &&
+      this.isPricePerPersonValid.every(Boolean) &&
+      this.isNumberOfRoomsFilled.every(Boolean) &&
+      this.isNumberOfRoomsValid.every(Boolean) &&
+      this.isMaxAdultsFilled.every(Boolean) &&
+      this.isMaxAdultsValid.every(Boolean)
+    );
+  }
+
+  updateValidationStates(): void {
+    // Resize arrays based on the number of room details
+    const roomCount = this.newContract.roomDetails.length;
+    this.isRoomTypeFilled = Array(roomCount).fill(true);
+    this.isPricePerPersonFilled = Array(roomCount).fill(true);
+    this.isPricePerPersonValid = Array(roomCount).fill(true);
+    this.isNumberOfRoomsFilled = Array(roomCount).fill(true);
+    this.isNumberOfRoomsValid = Array(roomCount).fill(true);
+    this.isMaxAdultsFilled = Array(roomCount).fill(true);
+    this.isMaxAdultsValid = Array(roomCount).fill(true);
+  }
+
   submit() {
     console.log('Contract Data', this.newContract);
     console.log('Room Details:', this.newContract.roomDetails);
-
-    this.submitContract.emit(this.newContract);
-    this.newContract = {
-      contractId: null,
-      hotelName: '',
-      startDate: new Date(),
-      endDate: new Date(),
-      markUpRate: 0,
-      roomDetails: [
-        {
-          roomType: '',
-          pricePerPerson: 0,
-          numberOfRooms: 0,
-          maxAdults: 0,
-        },
-      ],
-    };
-    this.closeAddContract();
+    if (this.validateForm()) {
+      this.submitContract.emit(this.newContract);
+      this.newContract = {
+        contractId: null,
+        hotelName: '',
+        startDate: null,
+        endDate: null,
+        markUpRate: null,
+        roomDetails: [
+          {
+            roomType: '',
+            pricePerPerson: null,
+            numberOfRooms: null,
+            maxAdults: null,
+          },
+        ],
+      };
+      this.updateValidationStates();
+      this.isSubmitting = false;
+      this.closeAddContract();
+    }
   }
 }

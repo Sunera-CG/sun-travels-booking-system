@@ -10,8 +10,8 @@ export interface RoomDetail {
 export interface Contract {
   contractId: number | null;
   hotelName: string;
-  startDate: Date;
-  endDate: Date;
+  startDate: Date | null;
+  endDate: Date | null;
   markUpRate: number | null;
   roomDetails: RoomDetail[];
 }
