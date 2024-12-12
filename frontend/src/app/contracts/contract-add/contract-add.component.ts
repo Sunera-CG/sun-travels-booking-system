@@ -19,19 +19,19 @@ export class ContractAddComponent {
   isSubmitting: boolean = false;
   successMessage: boolean = false;
 
-  isHotelNameFilled = true;
-  isStartDateFilled = true;
-  isEndDateFilled = true;
-  isEndDateBeforeStartDate = true;
-  isMarkUpRateFilled = true;
-  isMarkUpRateValid = true;
-  isRoomTypeFilled: boolean[] = [];
-  isPricePerPersonFilled: boolean[] = [];
-  isPricePerPersonValid: boolean[] = [];
-  isNumberOfRoomsFilled: boolean[] = [];
-  isNumberOfRoomsValid: boolean[] = [];
-  isMaxAdultsFilled: boolean[] = [];
-  isMaxAdultsValid: boolean[] = [];
+  isHotelNameFilled: boolean = true;
+  isStartDateFilled: boolean = true;
+  isEndDateFilled: boolean = true;
+  isEndDateBeforeStartDate: boolean = true;
+  isMarkUpRateFilled: boolean = true;
+  isMarkUpRateValid: boolean = true;
+  isRoomTypeFilled: boolean[] = [true];
+  isPricePerPersonFilled: boolean[] = [true];
+  isPricePerPersonValid: boolean[] = [true];
+  isNumberOfRoomsFilled: boolean[] = [true];
+  isNumberOfRoomsValid: boolean[] = [true];
+  isMaxAdultsFilled: boolean[] = [true];
+  isMaxAdultsValid: boolean[] = [true];
 
   // New contract object to bind to the form
   newContract: Contract = {
@@ -53,7 +53,6 @@ export class ContractAddComponent {
   ngOnInit(): void {
     const currentDate = new Date();
     this.today = currentDate.toISOString().split('T')[0]; // Formats today's date as yyyy-MM-dd
-    this.updateValidationStates();
   }
 
   // Function to add a new room detail
@@ -83,6 +82,13 @@ export class ContractAddComponent {
   removeRoom(index: number) {
     if (this.newContract.roomDetails.length > 1) {
       this.newContract.roomDetails.splice(index, 1);
+      this.isRoomTypeFilled.splice(index, 1);
+      this.isPricePerPersonFilled.splice(index, 1);
+      this.isPricePerPersonValid.splice(index, 1);
+      this.isNumberOfRoomsFilled.splice(index, 1);
+      this.isNumberOfRoomsValid.splice(index, 1);
+      this.isMaxAdultsFilled.splice(index, 1);
+      this.isMaxAdultsValid.splice(index, 1);
     }
   }
 
@@ -130,22 +136,11 @@ export class ContractAddComponent {
     );
   }
 
-  updateValidationStates(): void {
-    // Resize arrays based on the number of room details
-    const roomCount = this.newContract.roomDetails.length;
-    this.isRoomTypeFilled = Array(roomCount).fill(true);
-    this.isPricePerPersonFilled = Array(roomCount).fill(true);
-    this.isPricePerPersonValid = Array(roomCount).fill(true);
-    this.isNumberOfRoomsFilled = Array(roomCount).fill(true);
-    this.isNumberOfRoomsValid = Array(roomCount).fill(true);
-    this.isMaxAdultsFilled = Array(roomCount).fill(true);
-    this.isMaxAdultsValid = Array(roomCount).fill(true);
-  }
-
   submit() {
     console.log('Contract Data', this.newContract);
     console.log('Room Details:', this.newContract.roomDetails);
     if (this.validateForm()) {
+      this.isSubmitting = true;
       this.submitContract.emit(this.newContract);
       this.newContract = {
         contractId: null,
@@ -162,8 +157,6 @@ export class ContractAddComponent {
           },
         ],
       };
-      this.updateValidationStates();
-      this.isSubmitting = false;
       this.successMessage = true;
 
       setTimeout(() => {

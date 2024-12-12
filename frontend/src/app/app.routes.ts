@@ -1,9 +1,14 @@
 import { Routes } from '@angular/router';
 import { HomepageComponent } from './pages/homepage/homepage.component';
+import { SearchpageComponent } from './pages/searchpage/searchpage.component';
 
 export const routes: Routes = [
   {
-    path: 'home',
+    path: '',
     component: HomepageComponent,
+  },
+  {
+    path: 'search',
+    component: SearchpageComponent,
   },
 ];

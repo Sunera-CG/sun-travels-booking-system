@@ -13,5 +13,5 @@ public class AvailableRoomDTO {
 
     private Integer requirementId;
     private String roomType;
-    private Double markUpPrice;
+    private Double totalPrice;
 }

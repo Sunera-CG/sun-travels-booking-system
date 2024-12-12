@@ -1,0 +1,110 @@
+<div>
+  <div class="available-search-container">
+    <div class="add-contract-popup-topic">
+      <h2>Search Hotel</h2>
+    </div>
+    <div class="available-search-form-container">
+      <form class="available-search-form" (ngSubmit)="submit()">
+        <div class="search-details">
+          <div class="search-details-input">
+            <label for="CheckInDate">Check-in Date</label>
+            <input
+              id="checkInDate"
+              type="date"
+              [(ngModel)]="searchContract.checkInDate"
+              name="checkInDate"
+              [min]="today"
+            />
+            @if(!isChekingDateFilled){
+            <p class="error-message">Check-in Date Date is required.</p>
+            }@else {
+            <p class="error-message"></p>
+            }
+          </div>
+
+          <div class="search-details-input">
+            <label for="noOfNights">No. of Nights</label>
+            <input
+              id="noOfNights"
+              type="number"
+              [(ngModel)]="searchContract.noOfNights"
+              name="noOfNights"
+              placeholder="Enter No. of Nights"
+            />
+            @if(!isNoOfNightsFilled){
+            <p class="error-message">No. of Nights is required.</p>
+            }@else if(!isNoOfNightsValid){
+            <p class="error-message">No. of Nights should be positive</p>
+            }@else{
+            <p class="error-message"></p>
+            }
+          </div>
+        </div>
+
+        <!-- Room Requirements -->
+        <div class="room-requirement-form">
+          <div
+            class="room-requirement-container"
+            *ngFor="let room of searchContract.roomRequirements; let i = index"
+          >
+            <div class="search-details-input">
+              <label>No Of Rooms</label>
+              <input
+                type="number"
+                [(ngModel)]="room.numberOfRooms"
+                name="numberOfRooms-{{ i }}"
+                placeholder="Enter No Of Rooms"
+              />
+              @if (!isNumberOfRoomsFilled[i]) {
+              <p class="error-message">No Of Rooms is required.</p>
+              }@else if (!isNumberOfRoomsValid[i]) {
+              <p class="error-message">No Of Rooms should be positive</p>
+              }@else {
+              <p class="error-message"></p>
+              }
+            </div>
+
+            <div class="search-details-input">
+              <label>Max Adults</label>
+              <input
+                type="number"
+                [(ngModel)]="room.maxAdults"
+                name="maxAdults-{{ i }}"
+                placeholder="Enter Max Adults"
+              />
+              @if(!isMaxAdultsFilled[i]){
+              <p class="error-message">Max Adults is required.</p>
+              }@else if (!isMaxAdultsValid[i]) {
+              <p class="error-message">Max Adults should be positive</p>
+              }@else if(!isMaxAdultsEntered[i]) {
+              <p class="error-message">This Value Already Entered</p>
+              }@else {
+              <p class="error-message"></p>
+              }
+            </div>
+
+            <!-- Remove Room Button (visible from the second room onward) -->
+            <button
+              *ngIf="i > 0"
+              type="button"
+              class="remove-room-button"
+              (click)="removeRoom(i)"
+            >
+              Remove Room Type
+            </button>
+          </div>
+
+          <button type="button" class="add-room-button" (click)="addRoom()">
+            Add Room Requirement
+          </button>
+        </div>
+        <div class="submit-contract">
+          <button type="submit" [disabled]="isSubmitting">
+            {{ isSubmitting ? "Searching..." : "Search Hotel" }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <app-available-contract-view></app-available-contract-view>
+</div>

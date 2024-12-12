@@ -2,6 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Contract } from '../models/contract.model';
+import {
+  AvailableContract,
+  SearchContract,
+} from '../models/available-contract.model';
 
 @Injectable({
   providedIn: 'root',
@@ -27,5 +31,12 @@ export class ContractService {
   removeContract(contractId: number): Observable<void> {
     const removeUrl = `${this.apiUrl}/${contractId}`;
     return this.http.delete<void>(removeUrl);
+  }
+
+  searchAvailableContracts(
+    searchContract: SearchContract
+  ): Observable<AvailableContract[]> {
+    const searchUrl = `${this.apiUrl}/available`;
+    return this.http.post<AvailableContract[]>(searchUrl, searchContract);
   }
 }
