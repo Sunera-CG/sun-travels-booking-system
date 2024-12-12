@@ -1,6 +1,5 @@
 package com.suntravels.callcenter.repository;
 
-import com.suntravels.callcenter.dto.AvailableContract;
 import com.suntravels.callcenter.model.Contract;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -21,19 +20,9 @@ public interface ContractRepository extends JpaRepository<Contract,Integer> {
     List<Contract> findByHotelName(@Param("hotelName") String hotelName);
 
 
-//    @Query("SELECT new com.suntravels.callcenter.dto.AvaibleContract(r.roomDetailId, r.maxAdults, r.numberOfRooms, r.pricePerPerson, r.roomType) " +
-//            "FROM Contract c " +
-//            "JOIN c.roomDetails r " +
-//            "WHERE c.startDate <= :checkoutDate " +
-//            "AND c.endDate >= :checkinDate " +
-//            "AND r.numberOfRooms >= :requiredRooms " +
-//            "AND r.maxAdults >= :requiredAdults")
-//    List<Contract> findAvailablContract(
-//            @Param("checkinDate") LocalDate checkinDate,
-//            @Param("checkoutDate") LocalDate checkoutDate,
-//            @Param("requiredRooms") int requiredRooms,
-//            @Param("requiredAdults") int requiredAdults);
-
+    @Query("SELECT c FROM Contract c WHERE c.startDate <= :checkInDate AND c.endDate >= :checkOutDate")
+    List<Contract> findContractsByDateRange(@Param("checkInDate") LocalDate checkInDate,
+                                            @Param("checkOutDate") LocalDate checkOutDate);
 
 
 

@@ -1,19 +1,20 @@
 package com.suntravels.callcenter.service;
 
 
-import com.suntravels.callcenter.dto.ContractDTO;
-import com.suntravels.callcenter.exception.InvalidIdException;
+import com.suntravels.callcenter.dto.*;
 import com.suntravels.callcenter.model.Contract;
 import com.suntravels.callcenter.model.RoomDetail;
 import com.suntravels.callcenter.repository.ContractRepository;
 import com.suntravels.callcenter.validator.DateValidator;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
-
-
+import java.util.stream.Collectors;
 
 @Service
 public class ContractService {
@@ -30,7 +31,7 @@ public class ContractService {
      *
      * @return A list of all Contract objects.
      */
-    public List<Contract> getAllContracts(){
+    public List<Contract> getAllContracts() {
         return contractRepository.findAll();
     }
 
@@ -43,7 +44,7 @@ public class ContractService {
      * @throws IllegalStateException if the contract's end date is in the past.
      */
     @Transactional
-    public Contract addContract(ContractDTO contractDTO){
+    public Contract addContract(@Valid ContractDTO contractDTO) {
 
         DateValidator.validateDates(contractDTO.getStartDate(), contractDTO.getEndDate());
 
@@ -54,7 +55,7 @@ public class ContractService {
                 .endDate(contractDTO.getEndDate())
                 .markUpRate(contractDTO.getMarkUpRate())
                 .roomDetails(contractDTO.getRoomDetails().stream()      // Map room details from DTO to RoomDetail objects
-                        .map( roomDetailDTO ->
+                        .map(roomDetailDTO ->
                                 RoomDetail.builder()
                                         .roomType(roomDetailDTO.getRoomType())
                                         .pricePerPerson(roomDetailDTO.getPricePerPerson())
@@ -69,7 +70,7 @@ public class ContractService {
 
     public List<Contract> searchByName(String hotelName) {
         List<Contract> filteredContracts = contractRepository.findByHotelName(hotelName);
-        if (filteredContracts.isEmpty()){
+        if (filteredContracts.isEmpty()) {
             throw new IllegalStateException("No Contracts Found");
         }
         return filteredContracts;
@@ -82,62 +83,91 @@ public class ContractService {
      * @throws IllegalStateException if no contract with the given ID exists.
      */
     public void deleteContract(Integer contractId) {
-        if(! contractRepository.existsById(contractId)){
+        if (!contractRepository.existsById(contractId)) {
             throw new IllegalStateException("Contract doesn't exit bi this Id");
         }
         contractRepository.deleteById(contractId);
     }
 
+
     /**
      * Searches for contracts based on the provided search criteria.
      *
      * @param searchDTO The search data transfer object containing search parameters.
-     * @return A list of available contracts.
+     * @return A list of available contracts that meet the search criteria.
      */
-//    public List<AvailableContract> searchContract(SearchDTO searchDTO) {
-//        // Calculate checkout date
-//        LocalDate checkoutDate = searchDTO.getCheckInDate().plusDays(searchDTO.getNoOfNights());
-//        DateValidator.validateDates(searchDTO.getCheckInDate(), checkoutDate);
-//
-//        // Fetch available contracts based on basic criteria
-//        List<Contract> tempAvailableContracts = contractRepository.findAvailablContract(
-//                searchDTO.getCheckInDate(),
-//                checkoutDate,
-//                searchDTO.getRoomRequirements().getFirst().getNumberOfRooms(),
-//                searchDTO.getRoomRequirements().getFirst().getMaxAdults()
-//        );
-//
-//        // If no contracts are found, return a list with one "Unavailable" contract
-//        if (tempAvailableContracts.isEmpty()) {
-//            return List.of(AvailableContract.builder().status("Unavailable").build());
-//        }
-//
-//        // Filter and map contracts to AvailableContract DTOs
-//        List<AvailableContract> availableContracts = tempAvailableContracts.stream()
-//                .flatMap(contract -> searchDTO.getRoomRequirements().stream().map(roomRequirementDTO -> {
-//                    boolean matches = contract.getRoomDetails().stream().anyMatch(roomDetail ->
-//                            roomDetail.getNumberOfRooms() >= roomRequirementDTO.getNumberOfRooms() &&
-//                                    roomDetail.getMaxAdults() >= roomRequirementDTO.getMaxAdults()
-//                    );
-//                    if (matches) {
-//                        return AvailableContract.builder()
-//                                .hotelName(contract.getHotelName())
-//                                .status("Available")
-//                                .build();
-//                    } else {
-//                        return null;
-//                    }
-//                }))
-//                .filter(Objects::nonNull)
-//                .toList();
-//
-//        // If no contracts match, return "Unavailable"
-//        if (availableContracts.isEmpty()) {
-//            return List.of(AvailableContract.builder().status("Unavailable").build());
-//        }
-//
-//        return availableContracts;
-//    }
+    public List<AvailableContractDTO> searchAvailability(SearchDTO searchDTO) {
 
+        // Calculate the checkout date based on the check-in date and the number of nights.
+        LocalDate checkOutDate = searchDTO.getCheckInDate().plusDays(searchDTO.getNoOfNights());
 
+        // Fetch contracts within the date range
+        List<Contract> contracts = contractRepository.findContractsByDateRange(searchDTO.getCheckInDate(), checkOutDate);
+        List<AvailableContractDTO> availableContracts = new ArrayList<>();
+
+        //For each contract, check if room requirements are met
+        for (Contract contract : contracts) {
+            List<AvailableRoomDTO> availableRooms = new ArrayList<>();
+            boolean isContractValid = true;
+
+            //Check if the contract can fulfill all room requirements
+            for (int i = 0; i < searchDTO.getRoomRequirements().size(); i++) {
+                RoomRequirementDTO requirement = searchDTO.getRoomRequirements().get(i);
+
+                // Try to find a matching room for the current requirement.
+                AvailableRoomDTO availableRoom = findAvailableRoom(contract, requirement, i + 1, searchDTO.getNoOfNights());
+                if (availableRoom != null) {
+                    availableRooms.add(availableRoom);
+                } else {
+                    isContractValid = false;
+                    break; // If one requirement isn't satisfied, no need to check further
+                }
+            }
+
+            // If all room requirements are satisfied, add the contract to the result
+            if (isContractValid) {
+                System.out.println("Adding valid contract: " + contract);
+                AvailableContractDTO availableContract = AvailableContractDTO.builder()
+                        .hotelName(contract.getHotelName())
+                        .availableRooms(availableRooms)
+                        .build();
+                availableContracts.add(availableContract);
+            }
+        }
+
+        return availableContracts;
+    }
+
+    /**
+     * Finds a room in the contract that satisfies the given room requirement.
+     *
+     * @param contract      The contract to search within.
+     * @param requirement   The room requirement to satisfy.
+     * @param requirementId The ID of the requirement (for tracking purposes).
+     * @param noOfNights    The number of nights for which the room is required.
+     * @return An AvailableRoomDTO if a matching room is found, or null if no match is found.
+     */
+    private AvailableRoomDTO findAvailableRoom(Contract contract, RoomRequirementDTO requirement, int requirementId, int noOfNights) {
+
+        List<RoomDetail> validRooms = contract.getRoomDetails().stream()
+                .filter(roomDetail -> roomDetail.getMaxAdults() == requirement.getMaxAdults())
+                .toList();
+
+        for (RoomDetail roomDetail : validRooms) {
+            if (roomDetail.getNumberOfRooms() >= requirement.getNumberOfRooms()) {
+                // Calculate the price based on room details and markup.
+                double markUpPrice = roomDetail.getPricePerPerson() * noOfNights * roomDetail.getMaxAdults() * roomDetail.getNumberOfRooms() * contract.getMarkUpRate() / 100;
+
+                // Return the matching room as an AvailableRoomDTO.
+                return AvailableRoomDTO.builder()
+                        .requirementId(requirementId)
+                        .roomType(roomDetail.getRoomType())
+                        .markUpPrice(markUpPrice)
+                        .build();
+            }
+        }
+        return null; // No matching room found for this requirement
+    }
 }
+
+

@@ -1,19 +1,18 @@
 package com.suntravels.callcenter.dto;
 
-import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class AvailableContract {
+public class AvailableContractDTO {
 
     private String hotelName;
-    private String roomType;
-    private Double markUpPrice;
-    private String status;
+   private List<AvailableRoomDTO> availableRooms;
 }

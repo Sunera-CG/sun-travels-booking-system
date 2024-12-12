@@ -17,6 +17,7 @@ export class ContractAddComponent {
 
   today: string = '';
   isSubmitting: boolean = false;
+  successMessage: boolean = false;
 
   isHotelNameFilled = true;
   isStartDateFilled = true;
@@ -163,6 +164,12 @@ export class ContractAddComponent {
       };
       this.updateValidationStates();
       this.isSubmitting = false;
+      this.successMessage = true;
+
+      setTimeout(() => {
+        this.successMessage = false;
+      }, 3000);
+
       this.closeAddContract();
     }
   }
