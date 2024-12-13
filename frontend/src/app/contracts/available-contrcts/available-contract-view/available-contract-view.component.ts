@@ -16,6 +16,7 @@ import { FormsModule } from '@angular/forms';
 export class AvailableContractViewComponent {
   @Input() availableContracts: AvailableContract[] = [];
   @Input() searchContract: SearchContract | null = null;
+  @Input() isAvailableContractsNotFound: boolean = false;
 
   isViewPopUpOpen = false;
   selectedAvailableContract: AvailableContract | null = null;

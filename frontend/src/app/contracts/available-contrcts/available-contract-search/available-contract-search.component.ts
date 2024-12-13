@@ -19,6 +19,7 @@ export class AvailableContractSearchComponent {
   today: string = '';
   isSubmitting: boolean = false;
   successMessage: boolean = false;
+  isAvailableContractsNotFound: boolean = false;
 
   isChekingDateFilled: boolean = true;
   isNoOfNightsFilled: boolean = true;
@@ -113,6 +114,7 @@ export class AvailableContractSearchComponent {
   submit() {
     if (this.validForm()) {
       this.isSubmitting = true;
+      this.isAvailableContractsNotFound = false;
       this.contractService
         .searchAvailableContracts(this.searchContract)
         .subscribe({
@@ -121,8 +123,14 @@ export class AvailableContractSearchComponent {
             this.isSubmitting = false;
             this.successMessage = true;
             this.availableContracts = availableContracts;
+            if (this.availableContracts.length === 0) {
+              this.isAvailableContractsNotFound = true;
+            }
           },
           error: (error) => {
+            if (error.status === 400) {
+              this.isAvailableContractsNotFound = true;
+            }
             console.error('Error searching contracts:', error);
           },
         });

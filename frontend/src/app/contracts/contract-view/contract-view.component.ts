@@ -17,16 +17,24 @@ export class ContractViewComponent {
   isViewPopUpOpen = false;
   contractIdToRemove: number | null = null;
   selectedContract: Contract | null = null;
-  isActive = true;
+  status: string = '';
 
   // View contract details
   viewContract(contract: Contract): void {
     this.selectedContract = contract;
-    if (
-      this.selectedContract.endDate &&
-      this.selectedContract.endDate >= new Date()
-    ) {
-      this.isActive = false;
+    const currentDate = new Date();
+
+    if (this.selectedContract.endDate && this.selectedContract.startDate) {
+      const startDate = new Date(this.selectedContract.startDate);
+      const endDate = new Date(this.selectedContract.endDate);
+
+      if (endDate >= currentDate && startDate <= currentDate) {
+        this.status = 'active';
+      } else if (endDate >= currentDate && startDate > currentDate) {
+        this.status = 'up coming';
+      } else {
+        this.status = 'expired';
+      }
     }
     this.isViewPopUpOpen = true;
   }
@@ -35,7 +43,7 @@ export class ContractViewComponent {
   closeViewPopUp(): void {
     this.isViewPopUpOpen = false;
     this.selectedContract = null;
-    this.isActive = true;
+    this.status = '';
   }
 
   // Open the confirmation popup for contract removal

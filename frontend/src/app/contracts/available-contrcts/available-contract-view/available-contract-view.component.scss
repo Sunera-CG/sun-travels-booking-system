@@ -3,7 +3,7 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  margin: 1.25rem 12rem;
+  margin: 0.5rem 2.5rem;
   border: 2px solid black;
   border-radius: 0.5rem;
   padding: 0.25rem 0;
@@ -40,7 +40,6 @@
   cursor: pointer;
   padding: 0.8rem 1.5rem;
   background-color: var(--main-color);
-
   color: black;
   border: 1px solid var(--main-color-hover);
   border-radius: 0.5rem;
@@ -54,28 +53,6 @@
 }
 
 .view-button:hover {
-  transform: scale(1.05);
-  background-color: var(--main-color-hover);
-  box-shadow: 0 0 0.5rem 0.1rem var(--main-color-hover);
-}
-
-.remove-button {
-  cursor: pointer;
-  padding: 0.8rem 1.5rem;
-  background-color: var(--main-color);
-  border: 1px solid var(--main-color-hover);
-  color: black;
-  border-radius: 0.5rem;
-  font-size: 0.9rem;
-  font-weight: 550;
-  transition: all 0.3s ease-in-out;
-  margin: 1rem 0;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.remove-button:hover {
   transform: scale(1.05);
   background-color: var(--main-color-hover);
   box-shadow: 0 0 0.5rem 0.1rem var(--main-color-hover);
@@ -111,7 +88,7 @@
   width: 100%;
   height: 100%;
   overflow: auto;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.8);
 }
 
 .view-popup-content {
@@ -150,19 +127,33 @@ table {
   margin-top: 2rem;
   border-radius: 0.25rem;
   overflow: hidden;
-  width: 100%;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  justify-items: center;
+  text-align: center;
 }
 
 th,
 td {
-  padding: 1rem 0.5rem;
+  padding: 0.75rem 0.5rem;
   text-align: left;
   border: 1.75px solid black;
   text-align: center;
-  width: 4rem;
 }
 
 th {
   background-color: var(--main-color);
   font-size: 1.1rem;
+}
+
+.error-not-found {
+  display: flex;
+  font-size: 2.25rem;
+  color: red;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 100%;
+  font-family: "Garamond-Bold";
 }

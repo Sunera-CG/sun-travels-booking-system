@@ -86,11 +86,16 @@
     <div class="status-container">
       <div class="status-label">Status :</div>
       <div class="status-value">
-        @if(isActive){
-        <span class="active-status"><i class="fa-solid fa-circle"></i></span
-        >Active }@else {
-        <span class="Expired-status"><i class="fa-solid fa-circle"></i></span
-        >Expired }
+        <span
+          [ngClass]="{
+            'active-status': status === 'active',
+            'upcoming-status': status === 'up coming',
+            'expired-status': status === 'expired'
+          }"
+        >
+          <i class="fa-solid fa-circle"></i>
+        </span>
+        {{ status | titlecase }}
       </div>
     </div>
   </div>
