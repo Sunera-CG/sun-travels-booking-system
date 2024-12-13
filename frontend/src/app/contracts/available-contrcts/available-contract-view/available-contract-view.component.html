@@ -33,7 +33,10 @@
       <!-- Group available rooms by requirementId -->
       <div *ngFor="let requirementId of groupedRooms.keys()">
         <div class="requirement-group">
-          <h3>Requirement ID: {{ requirementId }}</h3>
+          <h4>
+            Requirement
+            <p>{{ requirementId }}</p>
+          </h4>
           <table>
             <thead>
               <tr>

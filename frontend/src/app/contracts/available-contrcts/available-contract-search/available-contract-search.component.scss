@@ -1,6 +1,7 @@
 .main-body {
   display: flex;
   flex-direction: row;
+  margin: 1rem;
 }
 
 .available-search-container {
@@ -203,5 +204,5 @@
   margin: 1rem;
   display: flex;
   width: 100%;
-  min-height: 80vh;
+  min-height: 60vh;
 }

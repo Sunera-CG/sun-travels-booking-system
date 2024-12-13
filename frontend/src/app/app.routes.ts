@@ -8,7 +8,7 @@ export const routes: Routes = [
     component: HomepageComponent,
   },
   {
-    path: 'search',
+    path: 'availability',
     component: SearchpageComponent,
   },
 ];

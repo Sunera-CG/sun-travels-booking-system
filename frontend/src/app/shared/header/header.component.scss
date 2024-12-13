@@ -1,0 +1,47 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  background-color: black;
+  color: var(--secondary-color);
+  position: relative;
+}
+
+.logo img {
+  height: 5rem;
+  position: absolute;
+  left: 7.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.header h1 {
+  margin: 0;
+  padding-left: 26rem;
+  font-size: 2.5rem;
+  color: var(--secondary-color);
+  flex-grow: 1;
+  text-align: center;
+  font-family: "Garamond-Regular";
+  letter-spacing: 0.5rem;
+}
+
+nav ul {
+  padding-right: 10rem;
+  list-style-type: none;
+  margin: 0;
+  display: flex;
+  gap: 4rem;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  font-size: 1.1rem;
+}
+
+nav a:hover {
+  color: var(--secondary-color);
+  font-weight: bold;
+}
