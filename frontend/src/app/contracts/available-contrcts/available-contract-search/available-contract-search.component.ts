@@ -2,7 +2,10 @@ import { Component } from '@angular/core';
 import { AvailableContractViewComponent } from '../available-contract-view/available-contract-view.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { SearchContract } from '../../../models/available-contract.model';
+import {
+  AvailableContract,
+  SearchContract,
+} from '../../../models/available-contract.model';
 import { ContractService } from '../../../services/contract.service';
 
 @Component({
@@ -12,6 +15,7 @@ import { ContractService } from '../../../services/contract.service';
   styleUrl: './available-contract-search.component.scss',
 })
 export class AvailableContractSearchComponent {
+  availableContracts: AvailableContract[] = [];
   today: string = '';
   isSubmitting: boolean = false;
   successMessage: boolean = false;
@@ -112,16 +116,29 @@ export class AvailableContractSearchComponent {
       this.contractService
         .searchAvailableContracts(this.searchContract)
         .subscribe({
-          next: (contracts) => {
-            console.log('Contracts found:', contracts);
+          next: (availableContracts) => {
+            console.log('Contracts found:', availableContracts);
+            this.isSubmitting = false;
             this.successMessage = true;
+            this.availableContracts = availableContracts;
           },
           error: (error) => {
             console.error('Error searching contracts:', error);
           },
         });
+      this.searchContract = {
+        checkInDate: null,
+        noOfNights: null,
+        roomRequirements: [
+          {
+            numberOfRooms: null,
+            maxAdults: null,
+          },
+        ],
+      };
     } else {
       console.log('Validation failed');
+      this.availableContracts = [];
     }
   }
 }

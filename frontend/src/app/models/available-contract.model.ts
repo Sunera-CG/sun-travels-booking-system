@@ -1,11 +1,12 @@
 //Define a basic AvailableRoomDetail model
-export interface AvailableRoomDetail {
+export interface RoomRequirements {
   numberOfRooms: number | null;
   maxAdults: number | null;
 }
 
 //Define a basic RoomRequirements model
-export interface RoomRequirements {
+export interface AvailableRoomDetail {
+  requirementId: number;
   roomType: string;
   totalPrice: number;
 }
@@ -14,7 +15,7 @@ export interface RoomRequirements {
 export interface SearchContract {
   checkInDate: Date | null;
   noOfNights: number | null;
-  roomRequirements: AvailableRoomDetail[];
+  roomRequirements: RoomRequirements[];
 }
 
 //Define a basic AvailableContract model

@@ -1,1 +1,54 @@
-<p>sdghasv</p>
+<!-- Contract List -->
+@for (availableContract of availableContracts; track availableContract) {
+<div class="contract-container">
+  <div class="contract-container-box">
+    <h1>{{ availableContract.hotelName }}</h1>
+    <div class="button-container">
+      <button
+        type="button"
+        class="view-button"
+        (click)="viewContract(availableContract)"
+      >
+        <i class="fa-solid fa-eye" style="color: #13390a"></i>
+        View Contract
+      </button>
+    </div>
+  </div>
+</div>
+}
+
+<!-- PopUp for Contract Details -->
+@if (isViewPopUpOpen) {
+<div class="view-popup">
+  <div class="view-popup-content">
+    <div class="view-popup-topic">
+      <button type="button" class="close-button" (click)="closeViewPopUp()">
+        ×
+      </button>
+      <h2>{{ selectedAvailableContract?.hotelName }}</h2>
+    </div>
+    <div class="view-popup-details">
+      <!-- Group available rooms by requirementId -->
+      <div *ngFor="let requirementId of groupedRooms.keys()">
+        <div class="requirement-group">
+          <h3>Requirement ID: {{ requirementId }}</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Room Type</th>
+                <th>Total Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let availableRoom of groupedRooms.get(requirementId)">
+                <td>{{ availableRoom.roomType }}</td>
+                <td>$ {{ availableRoom.totalPrice }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+}

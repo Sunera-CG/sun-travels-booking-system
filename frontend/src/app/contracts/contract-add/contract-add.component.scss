@@ -96,22 +96,22 @@
   border-radius: 0.5rem;
 }
 
-.add-contract-input-container {
+.add-contract-input-room {
   display: flex;
   flex-direction: column;
   width: 45%;
   border-radius: 0.2rem;
 }
 
-.add-contract-input-container label {
+.add-contract-input-room label {
   margin: 0.5rem 0 0.1rem 0;
 }
 
-.add-contract-input-container input {
+.add-contract-input-room input {
   padding: 0.25rem;
 }
 
-.add-contract-input-container ::-webkit-input-placeholder {
+.add-contract-input-room ::-webkit-input-placeholder {
   font-style: italic;
   padding-left: 0.5rem;
 }
@@ -124,7 +124,7 @@
   border-radius: 0.25rem;
   font-size: 0.9rem;
   cursor: pointer;
-  margin-top: 0.75rem;
+  margin-top: 0.25rem;
   transition: all 0.3s ease-in-out;
 }
 
@@ -198,8 +198,8 @@
 .error-message {
   margin: 0;
   color: #832510;
-  font-size: 0.85rem;
-  padding-left: 1rem;
+  font-size: 0.8rem;
+  padding-left: 0.5rem;
   height: 1rem;
 }
 

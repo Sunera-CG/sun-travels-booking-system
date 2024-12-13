@@ -1,6 +1,6 @@
-<div>
+<div class="main-body">
   <div class="available-search-container">
-    <div class="add-contract-popup-topic">
+    <div class="available-search-topic">
       <h2>Search Hotel</h2>
     </div>
     <div class="available-search-form-container">
@@ -47,8 +47,8 @@
             class="room-requirement-container"
             *ngFor="let room of searchContract.roomRequirements; let i = index"
           >
-            <div class="search-details-input">
-              <label>No Of Rooms</label>
+            <div class="room-details-input">
+              <label>No of Rooms</label>
               <input
                 type="number"
                 [(ngModel)]="room.numberOfRooms"
@@ -64,7 +64,7 @@
               }
             </div>
 
-            <div class="search-details-input">
+            <div class="room-details-input">
               <label>Max Adults</label>
               <input
                 type="number"
@@ -90,7 +90,7 @@
               class="remove-room-button"
               (click)="removeRoom(i)"
             >
-              Remove Room Type
+              Remove
             </button>
           </div>
 
@@ -106,5 +106,8 @@
       </form>
     </div>
   </div>
-  <app-available-contract-view></app-available-contract-view>
+  <app-available-contract-view
+    [availableContracts]="availableContracts"
+    [searchContract]="searchContract"
+  ></app-available-contract-view>
 </div>

@@ -114,12 +114,12 @@ public class ContractService {
                 RoomRequirementDTO requirement = searchDTO.getRoomRequirements().get(i);
 
                 // Try to find a matching room for the current requirement.
-                AvailableRoomDTO availableRoom = findAvailableRoom(contract, requirement, i + 1, searchDTO.getNoOfNights());
-                if (availableRoom != null) {
-                    availableRooms.add(availableRoom);
+                List<AvailableRoomDTO> matchingRooms = findAvailableRoom(contract, requirement, i + 1, searchDTO.getNoOfNights());
+                if (!matchingRooms.isEmpty()) {
+                    availableRooms.addAll(matchingRooms);
                 } else {
                     isContractValid = false;
-                    break; // If one requirement isn't satisfied, no need to check further
+                    break;  // If one requirement isn't satisfied, no need to check further
                 }
             }
 
@@ -146,7 +146,9 @@ public class ContractService {
      * @param noOfNights    The number of nights for which the room is required.
      * @return An AvailableRoomDTO if a matching room is found, or null if no match is found.
      */
-    private AvailableRoomDTO findAvailableRoom(Contract contract, RoomRequirementDTO requirement, int requirementId, int noOfNights) {
+    private List<AvailableRoomDTO> findAvailableRoom(Contract contract, RoomRequirementDTO requirement, int requirementId, int noOfNights) {
+
+        List<AvailableRoomDTO> availableRooms = new ArrayList<>();
 
         List<RoomDetail> validRooms = contract.getRoomDetails().stream()
                 .filter(roomDetail -> roomDetail.getMaxAdults() == requirement.getMaxAdults())
@@ -158,14 +160,14 @@ public class ContractService {
                 double markUpPrice = roomDetail.getPricePerPerson() * noOfNights * roomDetail.getMaxAdults() * roomDetail.getNumberOfRooms() * contract.getMarkUpRate() / 100;
 
                 // Return the matching room as an AvailableRoomDTO.
-                return AvailableRoomDTO.builder()
+                availableRooms.add(AvailableRoomDTO.builder()
                         .requirementId(requirementId)
                         .roomType(roomDetail.getRoomType())
                         .totalPrice(markUpPrice)
-                        .build();
+                        .build());
             }
         }
-        return null; // No matching room found for this requirement
+        return availableRooms;
     }
 }
 
