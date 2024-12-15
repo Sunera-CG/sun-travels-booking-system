@@ -30,6 +30,19 @@
       <h2>{{ selectedAvailableContract?.hotelName }}</h2>
     </div>
     <div class="view-popup-details">
+      <span
+        >From <strong>{{ searchContract?.checkInDate | date }}</strong> to
+        <strong>
+          {{
+            addDays(searchContract?.checkInDate, searchContract?.noOfNights)
+              | date
+          }}
+        </strong>
+      </span>
+
+      <br />
+      <br />
+
       <!-- Group available rooms by requirementId -->
       <div *ngFor="let requirementId of groupedRooms.keys()">
         <div class="requirement-group">

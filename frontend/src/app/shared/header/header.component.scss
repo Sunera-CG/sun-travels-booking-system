@@ -19,11 +19,11 @@
 .header h1 {
   margin: 0;
   padding-left: 26rem;
-  font-size: 2.5rem;
+  font-size: 2.25rem;
   color: var(--secondary-color);
   flex-grow: 1;
   text-align: center;
-  font-family: "Garamond-Regular";
+  font-family: "Garamond-Bold";
   letter-spacing: 0.5rem;
 }
 
@@ -41,7 +41,9 @@ nav a {
   font-size: 1.1rem;
 }
 
-nav a:hover {
+nav a:hover,
+.nav a:active,
+.nav a:focus {
   color: var(--secondary-color);
   font-weight: bold;
 }

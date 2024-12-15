@@ -160,7 +160,7 @@ public class ContractService {
         for (RoomDetail roomDetail : validRooms) {
             if (roomDetail.getNumberOfRooms() >= requirement.getNumberOfRooms()) {
                 // Calculate the price based on room details and markup.
-                double markUpPrice = roomDetail.getPricePerPerson() * noOfNights * roomDetail.getMaxAdults() * roomDetail.getNumberOfRooms() * contract.getMarkUpRate() / 100;
+                double markUpPrice = roomDetail.getPricePerPerson() * noOfNights * roomDetail.getMaxAdults() * roomDetail.getNumberOfRooms() * (100 - contract.getMarkUpRate()) / 100;
 
                 // Return the matching room as an AvailableRoomDTO.
                 availableRooms.add(AvailableRoomDTO.builder()

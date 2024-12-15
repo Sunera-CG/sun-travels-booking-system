@@ -42,6 +42,18 @@ export class AvailableContractViewComponent {
   getRoomRequirement(requirementId: number) {
     return this.searchContract?.roomRequirements[requirementId - 1]; // Assuming requirementId starts from 1
   }
+  addDays(
+    date: Date | null | undefined,
+    days: number | null | undefined
+  ): Date | null {
+    if (!date || days == null) {
+      return null; // Return null if the date or days are invalid (null or undefined)
+    }
+
+    const result = new Date(date);
+    result.setDate(result.getDate() + days);
+    return result;
+  }
 
   // View availableContract details
   viewContract(availableContract: AvailableContract): void {
