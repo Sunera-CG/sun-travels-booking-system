@@ -1,4 +1,10 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Contract } from '../../models/contract.model';
 
@@ -18,6 +24,47 @@ export class ContractViewComponent {
   contractIdToRemove: number | null = null;
   selectedContract: Contract | null = null;
   status: string = '';
+
+  displayedContracts: any[] = []; // Contracts to display on the current page
+  currentPage = 1; // Current page number
+  itemsPerPage = 10; // Number of contracts per page
+  totalPages = 1; // Total number of pages
+
+  ngOnInit(): void {
+    this.calculatePagination();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['contracts'] && changes['contracts'].currentValue) {
+      this.calculatePagination();
+    }
+  }
+
+  calculatePagination(): void {
+    this.totalPages = Math.ceil(this.contracts.length / this.itemsPerPage);
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    this.displayedContracts = this.contracts.slice(startIndex, endIndex);
+  }
+
+  changePage(page: number): void {
+    if (page >= 1 && page <= this.totalPages) {
+      this.currentPage = page;
+      this.calculatePagination();
+    }
+  }
+
+  nextPage(): void {
+    this.changePage(this.currentPage + 1);
+  }
+
+  prevPage(): void {
+    this.changePage(this.currentPage - 1);
+  }
+
+  trackByFn(index: number, item: any): any {
+    return item.id || index; // Use a unique ID or index for tracking
+  }
 
   // View contract details
   viewContract(contract: Contract): void {

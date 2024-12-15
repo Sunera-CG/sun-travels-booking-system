@@ -80,7 +80,7 @@
   border: 1px solid black;
   padding: 0 0.5rem 0.5rem 0.5rem;
   margin: 0.5rem 0.5rem;
-  gap: 1rem;
+  gap: 0.25rem;
   border-radius: 0.25rem;
 }
 
@@ -106,7 +106,7 @@
 
 .remove-room-button {
   padding: 0.5rem 1rem;
-  background-color: #631809;
+  background-color: rgb(135, 27, 27);
   color: white;
   border: none;
   border-radius: 0.25rem;
@@ -117,12 +117,12 @@
 }
 
 .remove-room-button:hover {
-  background-color: #832510;
+  background-color: rgb(153, 33, 33);
 }
 
 .add-room-button {
   padding: 0.5rem 1rem;
-  background-color: #13390a;
+  background-color: #1a4c0e;
   color: white;
   border: none;
   border-radius: 0.25rem;
@@ -135,7 +135,7 @@
 }
 
 .add-room-button:hover {
-  background-color: #185209;
+  background-color: #1c5b0c;
   box-shadow: 0 0 0.1rem 0.05rem;
 }
 
@@ -185,10 +185,29 @@
 
 .error-message {
   margin: 0;
-  color: #832510;
+  color: rgb(194, 33, 33);
   font-size: 0.8rem;
   padding-left: 0.25rem;
   height: 1rem;
+  animation: Vibrate 0.2s;
+}
+
+@keyframes Vibrate {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(5px);
+  }
+  50% {
+    transform: translate(0px);
+  }
+  75% {
+    transform: translateX(-5px);
+  }
+  100% {
+    transform: translateX(0);
+  }
 }
 
 .available-contact-container {

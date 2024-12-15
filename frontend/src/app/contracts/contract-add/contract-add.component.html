@@ -18,7 +18,7 @@
             placeholder="Enter Hotel Name"
           />
           @if(!isHotelNameFilled){
-          <p class="error-message">Hotel Name is required.</p>
+          <p class="error-message">Hotel Name is required</p>
           }@else {
           <p class="error-message"></p>
           }
@@ -34,7 +34,7 @@
             placeholder="Enter Mark Up Rate"
           />
           @if(!isMarkUpRateFilled){
-          <p class="error-message">Mark Up Rate is required.</p>
+          <p class="error-message">Mark Up Rate is required</p>
           }@else if(!isMarkUpRateValid){
           <p class="error-message">Mark Up Rate should between 1-100</p>
           }@else{
@@ -68,9 +68,9 @@
             [min]="newContract.startDate"
           />
           @if (!isEndDateFilled) {
-          <p class="error-message">End Date is required.</p>
+          <p class="error-message">End Date is required</p>
           }@else if (!isEndDateBeforeStartDate) {
-          <p class="error-message">End Date should be after Start Date.</p>
+          <p class="error-message">End Date should be after Start Date</p>
           }@else {
           <p class="error-message"></p>
           }
@@ -92,7 +92,7 @@
               placeholder="Enter Room Type"
             />
             @if (!isRoomTypeFilled[i]) {
-            <p class="error-message">Room Type is required.</p>
+            <p class="error-message">Room Type is required</p>
             }@else {
             <p class="error-message"></p>
             }
@@ -107,7 +107,7 @@
               placeholder="Enter Price Per Person"
             />
             @if (!isPricePerPersonFilled[i]) {
-            <p class="error-message">Price Per Person is required.</p>
+            <p class="error-message">Price Per Person is required</p>
             }@else if (!isPricePerPersonValid[i]) {
             <p class="error-message">Price Per Person should be positive</p>
             }@else {
@@ -124,7 +124,7 @@
               placeholder="Enter No.of Rooms"
             />
             @if (!isNumberOfRoomsFilled[i]) {
-            <p class="error-message">Number of Rooms is required.</p>
+            <p class="error-message">Number of Rooms is required</p>
             }@else if (!isNumberOfRoomsValid[i]) {
             <p class="error-message">Number of rooms should be positive</p>
             }@else {
@@ -141,7 +141,7 @@
               placeholder="Enter Max Adults"
             />
             @if(!isMaxAdultsFilled[i]){
-            <p class="error-message">Max Adults is required.</p>
+            <p class="error-message">Max Adults is required</p>
             }@else if (!isMaxAdultsValid[i]) {
             <p class="error-message">Max Adults should be positive</p>
             }@else {

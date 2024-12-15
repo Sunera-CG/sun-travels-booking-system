@@ -100,7 +100,7 @@
 }
 
 .view-popup-details {
-  padding: 1rem 2rem;
+  padding: 1rem 2rem 0 2rem;
 }
 
 .close-button {
@@ -124,7 +124,8 @@
 
 table {
   border-collapse: collapse;
-  margin-top: 2rem;
+  margin-top: 1rem;
+  margin-bottom: 1.5rem;
   border-radius: 0.25rem;
   overflow: hidden;
   width: 80%;
@@ -150,7 +151,7 @@ th {
 .error-not-found {
   display: flex;
   font-size: 2.25rem;
-  color: red;
+  color: rgb(165, 33, 33);
   justify-content: center;
   align-items: center;
   text-align: center;

@@ -134,6 +134,9 @@ public class ContractService {
             }
         }
 
+        if (availableContracts.isEmpty()) {
+            throw new IllegalStateException("No Contracts Found");
+        }
         return availableContracts;
     }
 

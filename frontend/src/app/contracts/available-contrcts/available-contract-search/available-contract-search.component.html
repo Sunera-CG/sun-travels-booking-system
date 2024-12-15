@@ -17,7 +17,7 @@
                 [min]="today"
               />
               @if(!isChekingDateFilled){
-              <p class="error-message">Check-in Date Date is required.</p>
+              <p class="error-message">Check-in Date Date is required</p>
               }@else {
               <p class="error-message"></p>
               }
@@ -33,7 +33,7 @@
                 placeholder="Enter No. of Nights"
               />
               @if(!isNoOfNightsFilled){
-              <p class="error-message">No. of Nights is required.</p>
+              <p class="error-message">No. of Nights is required</p>
               }@else if(!isNoOfNightsValid){
               <p class="error-message">No. of Nights should be positive</p>
               }@else{
@@ -60,7 +60,7 @@
                   placeholder="Enter No Of Rooms"
                 />
                 @if (!isNumberOfRoomsFilled[i]) {
-                <p class="error-message">No Of Rooms is required.</p>
+                <p class="error-message">No Of Rooms is required</p>
                 }@else if (!isNumberOfRoomsValid[i]) {
                 <p class="error-message">No Of Rooms should be positive</p>
                 }@else {
@@ -77,7 +77,7 @@
                   placeholder="Enter Max Adults"
                 />
                 @if(!isMaxAdultsFilled[i]){
-                <p class="error-message">Max Adults is required.</p>
+                <p class="error-message">Max Adults is required</p>
                 }@else if (!isMaxAdultsValid[i]) {
                 <p class="error-message">Max Adults should be positive</p>
                 }@else if(!isMaxAdultsEntered[i]) {
@@ -115,7 +115,7 @@
   <app-available-contract-view
     class="available-contact-container"
     [availableContracts]="availableContracts"
-    [searchContract]="searchContract"
+    [searchContract]="lastSearchContract"
     [isAvailableContractsNotFound]="isAvailableContractsNotFound"
   ></app-available-contract-view>
 </div>

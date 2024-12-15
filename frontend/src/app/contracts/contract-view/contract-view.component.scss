@@ -249,22 +249,49 @@ th {
 }
 
 .yes-button button {
-  background-color: #185209;
+  background-color: #1b5a0b;
 }
 
 .no-button button {
-  background-color: #631809;
+  background-color: rgb(165, 33, 33);
 }
 
 .yes-button button:hover,
 .yes-button button:focus {
-  background-color: #1d600d;
+  background-color: #226e0f;
   cursor: pointer;
-  box-shadow: 0 0 0.4rem 0.1rem #1d600d;
+  box-shadow: 0 0 0.4rem 0.1rem #226e0f;
 }
 .no-button button:hover,
 .no-button button:focus {
-  background-color: #832510;
+  background-color: #c42525;
   cursor: pointer;
-  box-shadow: 0 0 0.4rem 0.1rem#832510;
+  box-shadow: 0 0 0.4rem 0.1rem#c42525;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+}
+
+.pagination button {
+  margin: 0.5rem 0.5rem 1.5rem 0.5rem;
+  padding: 1rem 1.25rem;
+  font-size: 1rem;
+  border: 1px solid var(--main-color-hover);
+  background-color: var(--main-color);
+  cursor: pointer;
+  border-radius: 3px;
+  font-weight: bold;
+}
+
+.pagination button.active {
+  font-weight: bolder;
+  border: 1px solid darkgray;
+  color: #fff;
+  background-color: var(--main-color-hover);
+}
+
+.pagination button:disabled {
+  opacity: 0.6;
 }

@@ -15,7 +15,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class AvailableContractViewComponent {
   @Input() availableContracts: AvailableContract[] = [];
-  @Input() searchContract: SearchContract | null = null;
+  @Input() searchContract?: SearchContract;
   @Input() isAvailableContractsNotFound: boolean = false;
 
   isViewPopUpOpen = false;
@@ -39,11 +39,16 @@ export class AvailableContractViewComponent {
     }
   }
 
+  getRoomRequirement(requirementId: number) {
+    return this.searchContract?.roomRequirements[requirementId - 1]; // Assuming requirementId starts from 1
+  }
+
   // View availableContract details
   viewContract(availableContract: AvailableContract): void {
     this.selectedAvailableContract = availableContract;
     this.isViewPopUpOpen = true;
     this.groupRoomsByRequirementId();
+    console.log(this.searchContract);
   }
 
   // Close the contract view popup

@@ -1,5 +1,5 @@
 <!-- Contract List -->
-@for (contract of contracts; track contract) {
+@for (contract of displayedContracts; track contract) {
 <div class="contract-container">
   <div class="contract-container-box">
     <h1>{{ contract.hotelName }}</h1>
@@ -9,7 +9,7 @@
         class="view-button"
         (click)="viewContract(contract)"
       >
-        <i class="fa-solid fa-eye" style="color: #13390a"></i>
+        <i class="fa-solid fa-eye" style="color: #1b5a0b"></i>
         View Contract
       </button>
       <button
@@ -17,13 +17,28 @@
         class="remove-button"
         (click)="openRemoveConfirmation(contract)"
       >
-        <i class="fa-solid fa-trash-can" style="color: #631809"></i>
+        <i class="fa-solid fa-trash-can" style="color: rgb(155, 34, 34)"></i>
         Remove Contract
       </button>
     </div>
   </div>
 </div>
 }
+
+<!-- Pagination Controls -->
+<div class="pagination">
+  <button (click)="prevPage()" [disabled]="currentPage === 1">&lt;</button>
+  <button
+    *ngFor="let page of [].constructor(totalPages); let i = index"
+    (click)="changePage(i + 1)"
+    [class.active]="i + 1 === currentPage"
+  >
+    {{ i + 1 }}
+  </button>
+  <button (click)="nextPage()" [disabled]="currentPage === totalPages">
+    &gt;
+  </button>
+</div>
 
 <!-- Confirmation Popup for Remove Contract -->
 @if (isRemovePopupOpen) {

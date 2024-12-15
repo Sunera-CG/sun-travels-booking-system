@@ -29,6 +29,7 @@ export class AvailableContractSearchComponent {
   isMaxAdultsFilled: boolean[] = [true];
   isMaxAdultsValid: boolean[] = [true];
   isMaxAdultsEntered: boolean[] = [true];
+  lastSearchContract: SearchContract | undefined;
 
   searchContract: SearchContract = {
     checkInDate: null,
@@ -123,17 +124,17 @@ export class AvailableContractSearchComponent {
             this.isSubmitting = false;
             this.successMessage = true;
             this.availableContracts = availableContracts;
-            if (this.availableContracts.length === 0) {
-              this.isAvailableContractsNotFound = true;
-            }
           },
           error: (error) => {
             if (error.status === 400) {
               this.isAvailableContractsNotFound = true;
             }
+            this.isSubmitting = false;
             console.error('Error searching contracts:', error);
           },
         });
+
+      this.lastSearchContract = { ...this.searchContract };
       this.searchContract = {
         checkInDate: null,
         noOfNights: null,

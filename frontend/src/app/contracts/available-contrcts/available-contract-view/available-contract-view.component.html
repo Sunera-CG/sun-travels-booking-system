@@ -9,7 +9,7 @@
         class="view-button"
         (click)="viewContract(availableContract)"
       >
-        <i class="fa-solid fa-eye" style="color: #13390a"></i>
+        <i class="fa-solid fa-eye" style="color: #1b5a0b"></i>
         View Contract
       </button>
     </div>
@@ -33,10 +33,17 @@
       <!-- Group available rooms by requirementId -->
       <div *ngFor="let requirementId of groupedRooms.keys()">
         <div class="requirement-group">
-          <h4>
-            Requirement
-            <p>{{ requirementId }}</p>
-          </h4>
+          <span>
+            Requirement :
+            <strong>
+              No. of Rooms :
+              {{ getRoomRequirement(requirementId)?.numberOfRooms }}
+            </strong>
+            <i> and </i>
+            <strong>
+              Max Adults : {{ getRoomRequirement(requirementId)?.maxAdults }}
+            </strong>
+          </span>
           <table>
             <thead>
               <tr>
