@@ -31,7 +31,7 @@ public class RoomDetailDTO {
      */
     @NotNull(message = "Room price is required")
     @Min(value = 0, message = "Price per person must be positive")
-     private Double pricePerPerson;
+    private Double pricePerPerson;
 
     /**
      * The number of rooms available.

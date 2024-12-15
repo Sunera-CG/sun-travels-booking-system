@@ -8,6 +8,11 @@ import {
 } from '../../../models/available-contract.model';
 import { ContractService } from '../../../services/contract.service';
 
+/**
+ * Component responsible for searching available contracts based on user input.
+ * It includes functionality for adding/removing rooms, validating the form,
+ * and submitting the search request to the contract service.
+ */
 @Component({
   selector: 'app-available-contract-search',
   imports: [AvailableContractViewComponent, CommonModule, FormsModule],
@@ -43,17 +48,27 @@ export class AvailableContractSearchComponent {
   };
 
   constructor(private contractService: ContractService) {}
+
+  /**
+   * Lifecycle hook that sets today's date when the component is initialized.
+   * @return void
+   */
   ngOnInit(): void {
     const currentDate = new Date();
     this.today = currentDate.toISOString().split('T')[0]; // Formats today's date as yyyy-MM-dd
   }
 
+  /**
+   * Adds a new room to the search contract with empty fields.
+   * @return void
+   */
   addRoom() {
     this.searchContract.roomRequirements.push({
       numberOfRooms: null,
       maxAdults: null,
     });
 
+    // Adding validation flags for the new room
     this.isNumberOfRoomsFilled.push(true);
     this.isNumberOfRoomsValid.push(true);
     this.isMaxAdultsFilled.push(true);
@@ -61,6 +76,11 @@ export class AvailableContractSearchComponent {
     this.isMaxAdultsEntered.push(true);
   }
 
+  /**
+   * Removes a room from the search contract based on the provided index.
+   * @param index The index of the room to remove
+   * @return void
+   */
   removeRoom(index: number) {
     if (this.searchContract.roomRequirements.length > 1) {
       this.searchContract.roomRequirements.splice(index, 1);
@@ -71,6 +91,12 @@ export class AvailableContractSearchComponent {
       this.isMaxAdultsEntered.splice(index, 1);
     }
   }
+
+  /**
+   * Validates the search contract form.
+   * Checks if required fields are filled and if the values are valid.
+   * @return boolean True if the form is valid, false otherwise
+   */
   validForm(): boolean {
     this.isChekingDateFilled = !!this.searchContract.checkInDate;
     this.isNoOfNightsFilled = this.searchContract.noOfNights !== null;
@@ -112,6 +138,11 @@ export class AvailableContractSearchComponent {
     );
   }
 
+  /**
+   * Submits the search request for available contracts.
+   * If the form is valid, it triggers a request to search for available contracts.
+   * @return void
+   */
   submit() {
     if (this.validForm()) {
       this.isSubmitting = true;

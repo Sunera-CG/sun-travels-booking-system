@@ -24,7 +24,11 @@ export class AvailableContractViewComponent {
   // To store the rooms grouped by requirementId
   groupedRooms: Map<number, AvailableRoomDetail[]> = new Map();
 
-  // Group rooms by requirementId
+  /**
+   * Groups the rooms by their requirementId.
+   * This method organizes the available rooms into a Map where the keys are requirementIds,
+   * and the values are arrays of AvailableRoomDetail objects.
+   */
   groupRoomsByRequirementId(): void {
     if (this.selectedAvailableContract) {
       const rooms = this.selectedAvailableContract.availableRooms;
@@ -39,9 +43,22 @@ export class AvailableContractViewComponent {
     }
   }
 
+  /**
+   * Returns the room requirement for a given requirementId.
+   * @param requirementId - The ID of the room requirement to fetch.
+   * @return The room requirement corresponding to the given requirementId.
+   */
+
   getRoomRequirement(requirementId: number) {
     return this.searchContract?.roomRequirements[requirementId - 1]; // Assuming requirementId starts from 1
   }
+
+  /**
+   * Adds a specified number of days to a given date.
+   * @param date - The initial date to which days will be added.
+   * @param days - The number of days to add to the date.
+   * @return A new Date object with the days added, or null if the inputs are invalid.
+   */
   addDays(
     date: Date | null | undefined,
     days: number | null | undefined
@@ -55,7 +72,10 @@ export class AvailableContractViewComponent {
     return result;
   }
 
-  // View availableContract details
+  /**
+   * Opens a pop-up to view the details of a selected contract.
+   * @param availableContract - The contract to display details for.
+   */
   viewContract(availableContract: AvailableContract): void {
     this.selectedAvailableContract = availableContract;
     this.isViewPopUpOpen = true;
@@ -63,7 +83,9 @@ export class AvailableContractViewComponent {
     console.log(this.searchContract);
   }
 
-  // Close the contract view popup
+  /**
+   * Closes the contract view pop-up.
+   */
   closeViewPopUp(): void {
     this.isViewPopUpOpen = false;
     this.selectedAvailableContract = null;

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class ContractService {
@@ -95,7 +96,7 @@ public class ContractService {
      * @param searchDTO The search data transfer object containing search parameters.
      * @return A list of available contracts that meet the search criteria.
      */
-    public List<AvailableContractDTO> searchAvailability(SearchDTO searchDTO) {
+    public List<AvailableContractDTO> searchAvailability(@Valid SearchDTO searchDTO) {
 
         // Calculate the checkout date based on the check-in date and the number of nights.
         LocalDate checkOutDate = searchDTO.getCheckInDate().plusDays(searchDTO.getNoOfNights());
@@ -135,7 +136,7 @@ public class ContractService {
         }
 
         if (availableContracts.isEmpty()) {
-            throw new IllegalStateException("No Contracts Found");
+            throw new NoSuchElementException("No Contracts Found");
         }
         return availableContracts;
     }

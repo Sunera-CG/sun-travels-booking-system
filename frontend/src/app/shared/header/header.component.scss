@@ -41,9 +41,13 @@ nav a {
   font-size: 1.1rem;
 }
 
-nav a:hover,
-.nav a:active,
-.nav a:focus {
+nav a:hover {
   color: var(--secondary-color);
   font-weight: bold;
+}
+
+nav-bar a:active {
+  color: var(--secondary-color);
+  font-weight: bold;
+  text-decoration: underline;
 }

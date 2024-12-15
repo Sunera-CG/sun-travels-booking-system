@@ -50,12 +50,18 @@ export class ContractAddComponent {
     ],
   };
 
+  /**
+   * Initializes the component and sets today's date in the required format.
+   */
   ngOnInit(): void {
     const currentDate = new Date();
     this.today = currentDate.toISOString().split('T')[0]; // Formats today's date as yyyy-MM-dd
   }
 
-  // Function to add a new room detail
+  /**
+   * Adds a new room to the contract room details.
+   * Also adds validation arrays for the new room.
+   */
   addRoom() {
     this.newContract.roomDetails.push({
       roomType: '',
@@ -73,12 +79,17 @@ export class ContractAddComponent {
     this.isMaxAdultsValid.push(true);
   }
 
-  // Add the new contract
+  /**
+   * Emits an event to close the contract add form.
+   */
   closeAddContract(): void {
     this.closeForm.emit();
   }
 
-  // Function to remove a room detail
+  /**
+   * Removes a room detail from the contract.
+   * @param index - The index of the room to remove.
+   */
   removeRoom(index: number) {
     if (this.newContract.roomDetails.length > 1) {
       this.newContract.roomDetails.splice(index, 1);
@@ -92,6 +103,10 @@ export class ContractAddComponent {
     }
   }
 
+  /**
+   * Validates the form fields and returns a boolean indicating whether the form is valid.
+   * @returns {boolean} Returns true if the form is valid, otherwise false.
+   */
   validateForm(): boolean {
     this.isHotelNameFilled = !!this.newContract.hotelName.trim();
     this.isStartDateFilled = !!this.newContract.startDate;
@@ -136,6 +151,9 @@ export class ContractAddComponent {
     );
   }
 
+  /**
+   * Submits the contract if the form is valid and resets the contract form.
+   */
   submit() {
     console.log('Contract Data', this.newContract);
     console.log('Room Details:', this.newContract.roomDetails);

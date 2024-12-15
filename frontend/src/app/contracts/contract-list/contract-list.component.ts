@@ -35,6 +35,10 @@ export class ContractListComponent implements OnInit {
       });
   }
 
+  /**
+   * Searches contracts based on the provided search term.
+   * @param searchTerm The term to search for in the contracts.
+   */
   searchContract(searchTerm: string): void {
     this.isContractsNotFound = false;
     if (searchTerm === '') {
@@ -52,14 +56,24 @@ export class ContractListComponent implements OnInit {
     );
   }
 
+  /**
+   * Opens the form to add a new contract.
+   */
   openForm(): void {
     this.isAddContractOpen = true;
   }
 
+  /**
+   * Closes the form for adding a new contract.
+   */
   closeForm(): void {
     this.isAddContractOpen = false;
   }
 
+  /**
+   * Submits the newly added contract to the backend.
+   * @param newContract The contract to be added.
+   */
   submitAddContract(newContract: Contract): void {
     console.log('Submitting contract:', newContract);
     this.contractService.addContract(newContract).subscribe({
@@ -73,6 +87,10 @@ export class ContractListComponent implements OnInit {
     });
   }
 
+  /**
+   * Removes a contract by its ID.
+   * @param contractId The ID of the contract to be removed.
+   */
   removeContract(contractId: number): void {
     this.contractService.removeContract(contractId).subscribe({
       next: () => {

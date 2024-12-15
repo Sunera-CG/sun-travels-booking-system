@@ -1,24 +1,36 @@
-//Define a basic AvailableRoomDetail model
+/**
+ * Defines the requirements for a room, including the number of rooms
+ * and the maximum number of adults allowed in each room.
+ */
 export interface RoomRequirements {
   numberOfRooms: number | null;
   maxAdults: number | null;
 }
 
-//Define a basic RoomRequirements model
+/**
+ * Represents the details of an available room, including the room type
+ * and the total price for the room.
+ */
 export interface AvailableRoomDetail {
   requirementId: number;
   roomType: string;
   totalPrice: number;
 }
 
-//Define a basic SearchContract model
+/**
+ * Represents the search criteria for finding available contracts, including
+ * check-in date, number of nights, and a list of room requirements.
+ */
 export interface SearchContract {
   checkInDate: Date | null;
   noOfNights: number | null;
   roomRequirements: RoomRequirements[];
 }
 
-//Define a basic AvailableContract model
+/**
+ * Represents an available contract, which includes hotel name and a list
+ * of available rooms along with their details (type and price).
+ */
 export interface AvailableContract {
   hotelName: string;
   availableRooms: AvailableRoomDetail[];

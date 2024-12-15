@@ -1,3 +1,12 @@
+<div class="sort-container">
+  <select id="sort" (change)="onSortChange($event)">
+    <option value="">Sort By</option>
+    <option value="contractId">Contract ID</option>
+    <option value="hotelName">Hotel Name</option>
+    <option value="endDate">Status</option>
+  </select>
+</div>
+
 <!-- Contract List -->
 @for (contract of displayedContracts; track contract) {
 <div class="contract-container">
@@ -74,7 +83,7 @@
       </p>
       <p>
         Mark up rate for this contract is
-        {{ selectedContract?.markUpRate }} %
+        {{ selectedContract?.markUpRate }}%
       </p>
       <table>
         <thead>
