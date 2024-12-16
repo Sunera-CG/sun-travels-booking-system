@@ -49,7 +49,7 @@ export class ContractListComponent implements OnInit {
         this.contracts = filteredContracts;
       },
       (error) => {
-        if (error.status === 400) {
+        if (error.status === 404) {
           this.isContractsNotFound = true;
         }
       }

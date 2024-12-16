@@ -1,5 +1,6 @@
 package com.suntravels.callcenter.advice;
 
+import com.suntravels.callcenter.exception.NoContractsFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -39,27 +40,19 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 
-    /**
-     * Handles IllegalStateException and returns the error message.
-     *
-     * @param ex The IllegalStateException containing the error message.
-     * @return The exception message with HTTP status BAD_REQUEST.
-     */
-    @ExceptionHandler(IllegalStateException.class)
-    public ResponseEntity<String> handleIlleagalStateException(IllegalStateException ex) {
-        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
-
-    }
 
     /**
-     * Handles NoSuchElementException and returns the error message.
+     * Handles {@link NoContractsFoundException} thrown by the application.
+     * <p>
+     * This method is an exception handler for cases where no contracts are found.
+     * It returns a `404 Not Found` status along with the exception's message as the response body.
      *
-     * @param ex The NoSuchElementException containing the error message.
-     * @return The exception message with HTTP status BAD_REQUEST.
+     * @param ex the exception instance containing details of the error
+     * @return a {@link ResponseEntity} containing the exception message and the HTTP status code
      */
-    @ExceptionHandler(NoSuchElementException.class)
-    public ResponseEntity<String> handleNoSuchElementException(NoSuchElementException ex) {
-        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+    @ExceptionHandler(NoContractsFoundException.class)
+    public ResponseEntity<String> handleNoContractsFoundException(NoContractsFoundException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
     }
 
 

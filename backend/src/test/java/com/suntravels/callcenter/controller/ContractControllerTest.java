@@ -1,18 +1,24 @@
 package com.suntravels.callcenter.controller;
 
 
+import com.suntravels.callcenter.dto.ContractDTO;
+import com.suntravels.callcenter.dto.RoomDetailDTO;
 import com.suntravels.callcenter.model.Contract;
 import com.suntravels.callcenter.service.ContractService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.mockito.Mockito.*;
@@ -44,6 +50,8 @@ class ContractControllerTest {
         MockitoAnnotations.openMocks(this);
         mockMvc = MockMvcBuilders.standaloneSetup(contractController).build();
         objectMapper = new ObjectMapper();
+        // support Java 8 date time apis
+        objectMapper.registerModule(new JavaTimeModule());
     }
 
 
@@ -77,6 +85,49 @@ class ContractControllerTest {
         // Verifying the service method was called once
         verify(contractService, times(1)).getAllContracts();
     }
+
+    /**
+     * Test for the POST /contracts endpoint.
+     * Verifies that a new contract can be added successfully.
+     *
+     * @throws Exception if there is an issue with the request execution.
+     */
+    @Test
+    void testAddContract() throws Exception {
+        // Create a mock ContractDTO
+        ContractDTO contractDTO = ContractDTO.builder()
+                .hotelName("Hotel A")
+                .startDate(LocalDate.now())
+                .endDate(LocalDate.now().plusDays(30))
+                .markUpRate(15.0)
+                .roomDetails(Collections.singletonList(RoomDetailDTO.builder()
+                        .roomType("Deluxe")
+                        .pricePerPerson(100.0)
+                        .numberOfRooms(10)
+                        .maxAdults(2)
+                        .build()))
+                .build();
+
+        // Create the expected Contract response
+        Contract contract = new Contract();
+        contract.setContractId(1);
+        contract.setHotelName(contractDTO.getHotelName());
+
+        // Mock the service method
+        when(contractService.addContract(any(ContractDTO.class))).thenReturn(contract);
+
+        // Perform the POST request and verify the response
+        mockMvc.perform(post("/contracts")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(contractDTO)))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.contractId").value(1))
+                .andExpect(jsonPath("$.hotelName").value("Hotel A"));
+
+        // Verify the service method was called once
+        verify(contractService, times(1)).addContract(any(ContractDTO.class));
+    }
+
 
     /**
      * Test for the GET /contracts/{hotelName} endpoint.
@@ -127,6 +178,29 @@ class ContractControllerTest {
 
         // Verifying the service method was called once
         verify(contractService, times(1)).deleteContract(contractId);
+    }
+
+
+    /**
+     * Test for the GET /contracts/{hotelName} endpoint when no contracts are found.
+     * Verifies that an empty list is returned.
+     *
+     * @throws Exception if there is an issue with the request execution.
+     */
+    @Test
+    void testSearchByNameNotFound() throws Exception {
+        String hotelName = "Nonexistent Hotel";
+
+        // Mock the service method to return an empty list
+        when(contractService.searchByName(hotelName)).thenReturn(Collections.emptyList());
+
+        // Perform the GET request and verify the response
+        mockMvc.perform(get("/contracts/{hotelName}", hotelName))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(0));
+
+        // Verify the service method was called once
+        verify(contractService, times(1)).searchByName(hotelName);
     }
 
 

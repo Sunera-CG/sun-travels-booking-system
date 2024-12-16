@@ -2,6 +2,7 @@ package com.suntravels.callcenter.service;
 
 
 import com.suntravels.callcenter.dto.*;
+import com.suntravels.callcenter.exception.NoContractsFoundException;
 import com.suntravels.callcenter.model.Contract;
 import com.suntravels.callcenter.model.RoomDetail;
 import com.suntravels.callcenter.repository.ContractRepository;
@@ -41,7 +42,6 @@ public class ContractService {
      *
      * @param contractDTO The contract data transfer object containing contract details.
      * @return The created Contract object.
-     * @throws IllegalStateException if the contract's end date is in the past.
      */
     @Transactional
     public Contract addContract(@Valid ContractDTO contractDTO) {
@@ -68,10 +68,21 @@ public class ContractService {
         return contract;
     }
 
+
+    /**
+     * Searches for contracts by the specified hotel name.
+     * <p>
+     * This method retrieves a list of contracts that match the provided hotel name.
+     * If no contracts are found, it throws a {@link NoContractsFoundException}.
+     *
+     * @param hotelName the name of the hotel to search for; must not be null or empty
+     * @return a list of contracts matching the given hotel name
+     * @throws NoContractsFoundException if no contracts are found for the specified hotel name
+     */
     public List<Contract> searchByName(String hotelName) {
         List<Contract> filteredContracts = contractRepository.findByHotelName(hotelName);
         if (filteredContracts.isEmpty()) {
-            throw new IllegalStateException("No Contracts Found");
+            throw new NoContractsFoundException("No Contracts Found");
         }
         return filteredContracts;
     }
@@ -80,11 +91,11 @@ public class ContractService {
      * Deletes the contract with the specified ID.
      *
      * @param contractId the ID of the contract to be deleted.
-     * @throws IllegalStateException if no contract with the given ID exists.
+     * @throws NoContractsFoundException if no contract with the given ID exists.
      */
     public void deleteContract(Integer contractId) {
         if (!contractRepository.existsById(contractId)) {
-            throw new IllegalStateException("Contract doesn't exit bi this Id");
+            throw new NoContractsFoundException("Contract doesn't exit by this Id");
         }
         contractRepository.deleteById(contractId);
     }
@@ -95,6 +106,7 @@ public class ContractService {
      *
      * @param searchDTO The search data transfer object containing search parameters.
      * @return A list of available contracts that meet the search criteria.
+     * * @throws NoContractsFoundException if no contracts available with given requirements.
      */
     public List<AvailableContractDTO> searchAvailability(@Valid SearchDTO searchDTO) {
 
@@ -136,7 +148,7 @@ public class ContractService {
         }
 
         if (availableContracts.isEmpty()) {
-            throw new NoSuchElementException("No Contracts Found");
+            throw new NoContractsFoundException("No Available Contracts Found");
         }
         return availableContracts;
     }
@@ -161,7 +173,7 @@ public class ContractService {
         for (RoomDetail roomDetail : validRooms) {
             if (roomDetail.getNumberOfRooms() >= requirement.getNumberOfRooms()) {
                 // Calculate the price based on room details and markup.
-                double markUpPrice = roomDetail.getPricePerPerson() * noOfNights * roomDetail.getMaxAdults() * roomDetail.getNumberOfRooms() * (100 - contract.getMarkUpRate()) / 100;
+                double markUpPrice = roomDetail.getPricePerPerson() * noOfNights * roomDetail.getMaxAdults() * requirement.getNumberOfRooms() * (100 + contract.getMarkUpRate()) / 100;
 
                 // Return the matching room as an AvailableRoomDTO.
                 availableRooms.add(AvailableRoomDTO.builder()

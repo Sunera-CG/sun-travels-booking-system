@@ -157,7 +157,7 @@ export class AvailableContractSearchComponent {
             this.availableContracts = availableContracts;
           },
           error: (error) => {
-            if (error.status === 400) {
+            if (error.status === 404) {
               this.isAvailableContractsNotFound = true;
             }
             this.isSubmitting = false;

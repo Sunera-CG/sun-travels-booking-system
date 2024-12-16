@@ -14,5 +14,5 @@ import java.util.List;
 public class AvailableContractDTO {
 
     private String hotelName;
-   private List<AvailableRoomDTO> availableRooms;
+    private List<AvailableRoomDTO> availableRooms;
 }
