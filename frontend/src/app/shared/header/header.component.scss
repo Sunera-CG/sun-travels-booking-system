@@ -46,7 +46,7 @@ nav a:hover {
   font-weight: bold;
 }
 
-nav-bar a:active {
+nav a.active-link {
   color: var(--secondary-color);
   font-weight: bold;
   text-decoration: underline;

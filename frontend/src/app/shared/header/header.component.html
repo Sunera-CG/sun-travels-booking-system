@@ -5,8 +5,8 @@
   <h1>Sun Travels</h1>
   <nav>
     <ul>
-      <li><a href="/">Home</a></li>
-      <li><a href="/availability">Availability</a></li>
+      <li><a routerLink="/" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">Home</a></li>
+      <li><a routerLink="/availability" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">Availability</a></li>
     </ul>
   </nav>
 </header>
