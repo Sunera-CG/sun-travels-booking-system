@@ -1,4 +1,4 @@
-package com.suntravels.callcenter.repository.ContractRepositoryTest;
+package com.suntravels.callcenter.repository;
 
 import com.suntravels.callcenter.model.Contract;
 import com.suntravels.callcenter.model.RoomDetail;
