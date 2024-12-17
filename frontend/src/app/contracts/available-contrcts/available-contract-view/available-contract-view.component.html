@@ -1,3 +1,6 @@
+@if(isAvailableContractsNotFound){
+<div class="error-not-found">No Available Contracts Found</div>
+}@else {
 <!-- Contract List -->
 @for (availableContract of availableContracts; track availableContract) {
 <div class="contract-container">
@@ -15,9 +18,7 @@
     </div>
   </div>
 </div>
-} @if(isAvailableContractsNotFound){
-<div class="error-not-found">No Available Contracts Found</div>
-}
+} }
 
 <!-- PopUp for Contract Details -->
 @if (isViewPopUpOpen) {
